@@ -1,5 +1,6 @@
 package nz.ac.auckland.se281;
 
+import java.util.HashMap;
 import nz.ac.auckland.se281.Types.Location;
 
 public class OperatorManagementSystem {
@@ -29,20 +30,32 @@ public class OperatorManagementSystem {
     // get three digit number for each new operator in location
     // Create 3 digit number base
     // Verify what if operator already exists in location
-    String AKLcount = "000";
-    String HZLcount = "000";
-    String TRGcount = "000";
-    String TUOcount = "000";
-    String WLGcount = "000";
-    String NSNcount = "000";
-    String CHCcount = "000";
-    String DUDcount = "000";
+    int AKLcount = 0;
+    int HZLcount = 0;
+    int TRGcount = 0;
+    int TUOcount = 0;
+    int WLGcount = 0;
+    int NSNcount = 0;
+    int CHCcount = 0;
+    int DUDcount = 0;
 
-    // formatting count
-    int count = 0;
-    count++;
+    // create Hashmap
+    HashMap<String, Integer> counts = new HashMap<String, Integer>();
+    // Assigning keys and values
+    counts.put("AKL", AKLcount);
+    counts.put("HZL", HZLcount);
+    counts.put("TRG", TRGcount);
+    counts.put("TUO", TUOcount);
+    counts.put("WLG", WLGcount);
+    counts.put("NSN", NSNcount);
+    counts.put("CHC", CHCcount);
+    counts.put("DUD", DUDcount);
 
-    String threeDigitNumber = String.format("%03d", count);
+    if (counts.containsKey(locationInitials)) {
+      counts.put(locationInitials, counts.get(locationInitials) + 1);
+    }
+
+    String threeDigitNumber = String.format("%03d", counts.get(locationInitials));
 
     // Forming operatorID
     String operatorID = operatorInitals + "-" + locationInitials + "-" + threeDigitNumber;

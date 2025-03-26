@@ -10,7 +10,11 @@ public class OperatorManagementSystem {
   }
 
   public void createOperator(String operatorName, String location) {
-    MessageCli.OPERATOR_CREATED.printMessage(operatorName);
+    nz.ac.auckland.se281.Types.Location locationFound =
+        nz.ac.auckland.se281.Types.Location.fromString(location);
+    String locationAsString = locationFound.getFullName();
+
+    MessageCli.OPERATOR_CREATED.printMessage(operatorName, location, locationAsString);
   }
 
   public void viewActivities(String operatorId) {

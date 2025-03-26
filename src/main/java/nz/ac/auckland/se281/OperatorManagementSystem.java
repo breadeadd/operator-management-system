@@ -14,7 +14,19 @@ public class OperatorManagementSystem {
         nz.ac.auckland.se281.Types.Location.fromString(location);
     String locationAsString = locationFound.getFullName();
 
-    MessageCli.OPERATOR_CREATED.printMessage(operatorName, location, locationAsString);
+    // Creating operator initials
+    String[] words = operatorName.split(" ");
+    String operatorInitals = "";
+
+    for (String word : words) {
+      operatorInitals = operatorInitals + word.charAt(0);
+    }
+
+    // get three digit number for each new operator in location
+
+    String operatorID = operatorInitals + "-" + location;
+
+    MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorID, locationAsString);
   }
 
   public void viewActivities(String operatorId) {

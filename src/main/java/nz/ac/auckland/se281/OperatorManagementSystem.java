@@ -12,8 +12,8 @@ public class OperatorManagementSystem {
   }
 
   public void createOperator(String operatorName, String location) {
-    Location locationFound = Location.fromString(location);
-    String locationAsString = locationFound.getFullName();
+    Location locationFound = Location.fromString(location); // finds inputs as coded location
+    String locationAsString = locationFound.getFullName(); // finds locations full name
 
     // Getting Location initials
     String locationInitials = locationFound.getLocationAbbreviation();

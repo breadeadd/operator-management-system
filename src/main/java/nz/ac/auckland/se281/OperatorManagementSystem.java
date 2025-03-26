@@ -23,9 +23,27 @@ public class OperatorManagementSystem {
     }
 
     // get three digit number for each new operator in location
+    // Create 3 digit number base
+    // Verify what if operator already exists in location
+    String AKLcount = "000";
+    String HZLcount = "000";
+    String TRGcount = "000";
+    String TUOcount = "000";
+    String WLGcount = "000";
+    String NSNcount = "000";
+    String CHCcount = "000";
+    String DUDcount = "000";
 
-    String operatorID = operatorInitals + "-" + location;
+    // formatting count
+    int count = 0;
+    count++;
 
+    String threeDigitNumber = String.format("%03d", count);
+
+    // Forming operatorID
+    String operatorID = operatorInitals + "-" + location + "-" + threeDigitNumber;
+
+    // Print Info
     MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorID, locationAsString);
   }
 

@@ -1,5 +1,7 @@
 package nz.ac.auckland.se281;
 
+import nz.ac.auckland.se281.Types.Location;
+
 public class OperatorManagementSystem {
 
   // Do not change the parameters of the constructor
@@ -10,9 +12,11 @@ public class OperatorManagementSystem {
   }
 
   public void createOperator(String operatorName, String location) {
-    nz.ac.auckland.se281.Types.Location locationFound =
-        nz.ac.auckland.se281.Types.Location.fromString(location);
+    Location locationFound = Location.fromString(location);
     String locationAsString = locationFound.getFullName();
+
+    // Getting Location initials
+    String locationInitials = locationFound.getLocationAbbreviation();
 
     // Creating operator initials
     String[] words = operatorName.split(" ");
@@ -41,7 +45,7 @@ public class OperatorManagementSystem {
     String threeDigitNumber = String.format("%03d", count);
 
     // Forming operatorID
-    String operatorID = operatorInitals + "-" + location + "-" + threeDigitNumber;
+    String operatorID = operatorInitals + "-" + locationInitials + "-" + threeDigitNumber;
 
     // Print Info
     MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorID, locationAsString);

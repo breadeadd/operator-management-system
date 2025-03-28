@@ -93,16 +93,24 @@ public class OperatorManagementSystem {
     // Save operators - save operator ID to array
     String operatorSaved =
         MessageCli.OPERATOR_ENTRY.getMessage(operatorName, operatorID, locationAsString);
-
-    if (savedOperators.indexOf(operatorSaved) == -1) {
-      savedOperators.add(operatorSaved);
-    } else {
-      MessageCli.OPERATOR_NOT_CREATED_ALREADY_EXISTS_SAME_LOCATION.printMessage(
-          operatorName, locationAsString);
+    
+    boolean operatorExists = false;
+    //Checking if operator exists
+    for (String opSaved : savedOperators) {
+      if (opSaved.contains(operatorInitals) && opSaved.contains(locationInitials)) {
+        operatorExists = true;
+        break;
+      }
     }
 
-    // Print Info
+    //Deciding print
+    if (operatorExists) {
+      MessageCli.OPERATOR_NOT_CREATED_ALREADY_EXISTS_SAME_LOCATION.printMessage(
+        operatorName, locationAsString);
+    } else {
+    savedOperators.add(operatorSaved);
     MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorID, locationAsString);
+    }
   }
 
   //////////////////////////////////////////////////

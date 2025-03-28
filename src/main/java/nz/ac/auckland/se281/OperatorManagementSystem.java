@@ -53,9 +53,20 @@ public class OperatorManagementSystem {
         foundOperators.add(operator);
       }
     }
+    //checking plural
+    String pluralOperator;
+    String joiningWord;
+    if (operatorCount > 1) {
+      pluralOperator = "s";
+      joiningWord = "are";
+    } else {
+      pluralOperator = "";
+      joiningWord = "is";
+    }
+
 
     if (operatorCount > 0) {
-      MessageCli.OPERATORS_FOUND.printMessage("is", Integer.toString(operatorCount), "", ":");
+      MessageCli.OPERATORS_FOUND.printMessage(joiningWord, Integer.toString(operatorCount), pluralOperator, ":");
       // print for each found operator
       for (String foundOp : foundOperators) {
         System.out.println(foundOp);

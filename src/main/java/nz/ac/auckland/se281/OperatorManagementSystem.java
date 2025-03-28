@@ -23,7 +23,7 @@ public class OperatorManagementSystem {
       // Assigning keys and values
       if (!isInitialized) {
        counts.put("AKL", 0);
-       counts.put("HZL", 0);
+       counts.put("HLZ", 0);
        counts.put("TRG", 0);
        counts.put("TUO", 0);
        counts.put("WLG", 0);

@@ -1,18 +1,45 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import nz.ac.auckland.se281.Types.Location;
 
 public class OperatorManagementSystem {
+  public ArrayList<String> savedOperators;
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {}
 
   public void searchOperators(String keyword) {
-    MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
+    int operatorCount = 0;
+    ArrayList<String> foundOperators;
+
+    foundOperators = new ArrayList<>();
+    // if keyword = any location, operator or initial code - case insensitive
+
+    // can make 2 lists to store operator and location. - compare seperately
+    // Case insensitiveni TODO
+    for (String operator : savedOperators) {
+      // compare keyword to operator assertContains?
+      if (operator.contains(keyword)) {
+        operatorCount++;
+        foundOperators.add(operator);
+      }
+    }
+
+    if (operatorCount > 0) {
+      MessageCli.OPERATORS_FOUND.printMessage("is", Integer.toString(operatorCount), "", ":");
+      // print for each found operator
+      for (String foundOp : foundOperators) {
+        System.out.println(foundOp);
+      }
+    } else {
+      MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
+    }
   }
 
   public void createOperator(String operatorName, String location) {
+
     Location locationFound = Location.fromString(location); // finds inputs as coded location
     String locationAsString = locationFound.getFullName(); // finds locations full name
 
@@ -27,29 +54,17 @@ public class OperatorManagementSystem {
       operatorInitals = operatorInitals + word.charAt(0);
     }
 
-    // get three digit number for each new operator in location
-    // Create 3 digit number base
-    // Verify what if operator already exists in location
-    int AKLcount = 0;
-    int HZLcount = 0;
-    int TRGcount = 0;
-    int TUOcount = 0;
-    int WLGcount = 0;
-    int NSNcount = 0;
-    int CHCcount = 0;
-    int DUDcount = 0;
-
     // create Hashmap
     HashMap<String, Integer> counts = new HashMap<String, Integer>();
     // Assigning keys and values
-    counts.put("AKL", AKLcount);
-    counts.put("HZL", HZLcount);
-    counts.put("TRG", TRGcount);
-    counts.put("TUO", TUOcount);
-    counts.put("WLG", WLGcount);
-    counts.put("NSN", NSNcount);
-    counts.put("CHC", CHCcount);
-    counts.put("DUD", DUDcount);
+    counts.put("AKL", 0);
+    counts.put("HZL", 0);
+    counts.put("TRG", 0);
+    counts.put("TUO", 0);
+    counts.put("WLG", 0);
+    counts.put("NSN", 0);
+    counts.put("CHC", 0);
+    counts.put("DUD", 0);
 
     if (counts.containsKey(locationInitials)) {
       counts.put(locationInitials, counts.get(locationInitials) + 1);
@@ -59,6 +74,12 @@ public class OperatorManagementSystem {
 
     // Forming operatorID
     String operatorID = operatorInitals + "-" + locationInitials + "-" + threeDigitNumber;
+
+    // Save operators - save operator ID to array
+    savedOperators = new ArrayList<>(); // might need to change placement
+    String operatorSaved =
+        MessageCli.OPERATOR_ENTRY.getMessage(operatorName, operatorID, locationAsString);
+    savedOperators.add(operatorSaved);
 
     // Print Info
     MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorID, locationAsString);

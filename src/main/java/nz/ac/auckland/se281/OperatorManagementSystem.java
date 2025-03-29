@@ -12,29 +12,28 @@ public class OperatorManagementSystem {
   public OperatorManagementSystem() {
     counts = new HashMap<>();
     savedOperators = new ArrayList<>();
+    // initializing hashmap
+    class Initialization {
+      private boolean isInitialized = false;
+
+      public void InitializeCounts() {
+        // Assigning keys and values
+        if (!isInitialized) {
+          counts.put("AKL", 0);
+          counts.put("HLZ", 0);
+          counts.put("TRG", 0);
+          counts.put("TUO", 0);
+          counts.put("WLG", 0);
+          counts.put("NSN", 0);
+          counts.put("CHC", 0);
+          counts.put("DUD", 0);
+          isInitialized = true;
+        }
+      }
+    }
+
     new Initialization().InitializeCounts();
   }
-  
-  //initializing hashmap
-  public class Initialization {
-    private boolean isInitialized = false;
-
-    public void InitializeCounts() {
-      // Assigning keys and values
-      if (!isInitialized) {
-       counts.put("AKL", 0);
-       counts.put("HLZ", 0);
-       counts.put("TRG", 0);
-       counts.put("TUO", 0);
-       counts.put("WLG", 0);
-       counts.put("NSN", 0);
-       counts.put("CHC", 0);
-       counts.put("DUD", 0);   
-       isInitialized = true;
-      }
-   }
-  }
-  
 
   public void searchOperators(String keyword) {
     int operatorCount = 0;
@@ -45,15 +44,15 @@ public class OperatorManagementSystem {
 
     // can make 2 lists to store operator and location. - compare seperately
     // Case insensitiveni TODO
-    
+
     for (String operator : savedOperators) {
-      // compare keyword to operator assertContains?
       if (operator.contains(keyword)) {
         operatorCount++;
         foundOperators.add(operator);
       }
     }
-    //checking plural
+
+    // checking plural
     String pluralOperator;
     String joiningWord;
     if (operatorCount > 1) {
@@ -64,9 +63,9 @@ public class OperatorManagementSystem {
       joiningWord = "is";
     }
 
-
     if (operatorCount > 0) {
-      MessageCli.OPERATORS_FOUND.printMessage(joiningWord, Integer.toString(operatorCount), pluralOperator, ":");
+      MessageCli.OPERATORS_FOUND.printMessage(
+          joiningWord, Integer.toString(operatorCount), pluralOperator, ":");
       // print for each found operator
       for (String foundOp : foundOperators) {
         System.out.println(foundOp);
@@ -91,7 +90,7 @@ public class OperatorManagementSystem {
       operatorInitals = operatorInitals + word.charAt(0);
     }
 
-    //setting three digit number
+    // setting three digit number
     if (counts.containsKey(locationInitials)) {
       counts.put(locationInitials, counts.get(locationInitials) + 1);
     }
@@ -104,9 +103,9 @@ public class OperatorManagementSystem {
     // Save operators - save operator ID to array
     String operatorSaved =
         MessageCli.OPERATOR_ENTRY.getMessage(operatorName, operatorID, locationAsString);
-    
+
     boolean operatorExists = false;
-    //Checking if operator exists
+    // Checking if operator exists
     for (String opSaved : savedOperators) {
       if (opSaved.contains(operatorInitals) && opSaved.contains(locationInitials)) {
         operatorExists = true;
@@ -114,13 +113,13 @@ public class OperatorManagementSystem {
       }
     }
 
-    //Deciding print
+    // Deciding print
     if (operatorExists) {
       MessageCli.OPERATOR_NOT_CREATED_ALREADY_EXISTS_SAME_LOCATION.printMessage(
-        operatorName, locationAsString);
+          operatorName, locationAsString);
     } else {
-    savedOperators.add(operatorSaved);
-    MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorID, locationAsString);
+      savedOperators.add(operatorSaved);
+      MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorID, locationAsString);
     }
   }
 

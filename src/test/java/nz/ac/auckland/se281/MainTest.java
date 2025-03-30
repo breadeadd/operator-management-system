@@ -972,6 +972,20 @@ public class MainTest {
 
       assertContains("Operator not created: 'AL' is an invalid location.");
     }
+
+    @Test
+    public void T4_02_add_your_own_tests_as_needed() throws Exception {
+      runCommands(CREATE_OPERATOR, "'We'", "'AKL'", EXIT);
+
+      assertContains("Operator not created: 'We' is not a valid operator name.");
+    }
+
+    @Test
+    public void T4_03_add_your_own_tests_as_needed() throws Exception {
+      runCommands(CREATE_OPERATOR, "'We '", "'AKL'", EXIT);
+
+      assertContains("Operator not created: 'We ' is not a valid operator name.");
+    }
   }
 
   private static final Object[] CREATE_14_OPERATORS =

@@ -75,13 +75,19 @@ public class OperatorManagementSystem {
   public void createOperator(String operatorName, String location) {
     Location locationFound = Location.fromString(location); // finds inputs as coded location
 
-    // if Location is not Found
+    // if Location is not Found - exit
     if (locationFound == null) {
       MessageCli.OPERATOR_NOT_CREATED_INVALID_LOCATION.printMessage(location);
       return;
     }
 
     String locationAsString = locationFound.getFullName(); // finds locations full name
+
+    // Determining if operator name is valid
+    String checkOperator = operatorName.trim();
+    if (checkOperator.length() < 3) {
+      MessageCli.OPERATOR_NOT_CREATED_INVALID_OPERATOR_NAME.printMessage(operatorName);
+    }
 
     // Getting Location initials
     String locationInitials = locationFound.getLocationAbbreviation();

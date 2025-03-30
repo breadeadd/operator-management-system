@@ -42,8 +42,12 @@ public class OperatorManagementSystem {
     // initialise found lists for each search
     foundOperators = new ArrayList<>();
 
+    // ensuring case insensitive
+    keyword = keyword.toLowerCase();
+    // cycling through all saved operators for matches
     for (String operator : savedOperators) {
-      if (operator.contains(keyword)) {
+      String ignoreCaseOperator = operator.toLowerCase();
+      if (ignoreCaseOperator.contains(keyword)) {
         operatorCount++;
         foundOperators.add(operator);
       }

@@ -986,6 +986,14 @@ public class MainTest {
 
       assertContains("Operator not created: 'We ' is not a valid operator name.");
     }
+
+    @Test
+    public void T4_04_add_your_own_tests_as_needed() throws Exception {
+      runCommands(unpack(CREATE_14_OPERATORS, EXIT));
+      runCommands(unpack(CREATE_14_OPERATORS, SEARCH_OPERATORS, "'auckland'", EXIT));
+
+      assertContains("Auckland");
+    }
   }
 
   private static final Object[] CREATE_14_OPERATORS =

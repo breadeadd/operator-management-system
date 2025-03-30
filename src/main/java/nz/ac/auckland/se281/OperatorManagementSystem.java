@@ -44,6 +44,8 @@ public class OperatorManagementSystem {
 
     // ensuring case insensitive
     keyword = keyword.toLowerCase();
+    keyword = keyword.trim();
+
     // cycling through all saved operators for matches
     for (String operator : savedOperators) {
       String ignoreCaseOperator = operator.toLowerCase();

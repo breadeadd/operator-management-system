@@ -43,16 +43,21 @@ public class OperatorManagementSystem {
     foundOperators = new ArrayList<>();
 
     // ensuring case insensitive
-    keyword = keyword.toLowerCase();
-    keyword = keyword.trim();
+    String checkKeyword = keyword.toLowerCase();
+    checkKeyword = checkKeyword.trim();
 
     // cycling through all saved operators for matches
     for (String operator : savedOperators) {
       String ignoreCaseOperator = operator.toLowerCase();
-      if (ignoreCaseOperator.contains(keyword)) {
+      if (ignoreCaseOperator.contains(checkKeyword)) {
         operatorCount++;
         foundOperators.add(operator);
       }
+    }
+
+    // if keyword is not found anywhere
+    if (foundOperators.isEmpty()) {
+      MessageCli.OPERATOR_NOT_FOUND.printMessage(keyword);
     }
 
     // checking plural

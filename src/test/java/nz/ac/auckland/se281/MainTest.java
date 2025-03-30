@@ -1002,6 +1002,14 @@ public class MainTest {
 
       assertContains("Auckland");
     }
+
+    @Test
+    public void T4_06_add_your_own_tests_as_needed() throws Exception {
+      runCommands(unpack(CREATE_14_OPERATORS, EXIT));
+      runCommands(unpack(CREATE_14_OPERATORS, SEARCH_OPERATORS, "'aucland  '", EXIT));
+
+      assertContains("Operator not found: 'aucland  ' is an invalid operator ID.");
+    }
   }
 
   private static final Object[] CREATE_14_OPERATORS =

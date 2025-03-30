@@ -1010,6 +1010,14 @@ public class MainTest {
 
       assertContains("Operator not found: 'aucland  ' is an invalid operator ID.");
     }
+
+    @Test
+    public void T4_07_add_your_own_tests_as_needed() throws Exception {
+      runCommands(unpack(CREATE_14_OPERATORS, EXIT));
+      runCommands(unpack(CREATE_14_OPERATORS, SEARCH_OPERATORS, "'located'", EXIT));
+
+      assertContains("Operator not found: 'located' is an invalid operator ID.");
+    }
   }
 
   private static final Object[] CREATE_14_OPERATORS =

@@ -43,11 +43,11 @@ public class OperatorManagementSystem {
     foundOperators = new ArrayList<>();
 
     // ensuring case insensitive
-    String checkKeyword = keyword.toLowerCase();
-    checkKeyword = checkKeyword.trim(); // check if this needs to return back in error msg with trim
+    keyword = keyword.toLowerCase();
+    keyword = keyword.trim(); // check if this needs to return back in error msg with trim
 
     // ensure 'located' or 'is' do not count as operatorIDs
-    if (checkKeyword.equals("located") || checkKeyword.equals("is")) {
+    if (keyword.equals("located") || keyword.equals("is") || keyword.contains("|")) {
       MessageCli.OPERATOR_NOT_FOUND.printMessage(keyword);
       return;
     }
@@ -55,7 +55,7 @@ public class OperatorManagementSystem {
     // cycling through all saved operators for matches
     for (String operator : savedOperators) {
       String ignoreCaseOperator = operator.toLowerCase();
-      if (ignoreCaseOperator.contains(checkKeyword)) {
+      if (ignoreCaseOperator.contains(keyword)) {
         operatorCount++;
         foundOperators.add(operator);
       }

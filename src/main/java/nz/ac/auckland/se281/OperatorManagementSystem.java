@@ -39,11 +39,8 @@ public class OperatorManagementSystem {
     int operatorCount = 0;
     ArrayList<String> foundOperators;
 
+    // initialise found lists for each search
     foundOperators = new ArrayList<>();
-    // if keyword = any location, operator or initial code - case insensitive
-
-    // can make 2 lists to store operator and location. - compare seperately
-    // Case insensitiveni TODO
 
     for (String operator : savedOperators) {
       if (operator.contains(keyword)) {
@@ -77,6 +74,13 @@ public class OperatorManagementSystem {
 
   public void createOperator(String operatorName, String location) {
     Location locationFound = Location.fromString(location); // finds inputs as coded location
+
+    // if Location is not Found
+    if (locationFound == null) {
+      MessageCli.OPERATOR_NOT_CREATED_INVALID_LOCATION.printMessage(location);
+      return;
+    }
+
     String locationAsString = locationFound.getFullName(); // finds locations full name
 
     // Getting Location initials

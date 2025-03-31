@@ -148,12 +148,17 @@ public class OperatorManagementSystem {
     // Save Operator details
     String savedDetails =
         operatorName.concat(" ").concat(operatorID).concat(" ").concat(locationAsString);
+    savedDetails = savedDetails.toLowerCase(); // makes sure comparissons are case insensitive
 
+    // Setting initial conditions to check
+    String lowerOperatorName = operatorName.toLowerCase();
     boolean operatorExists = false;
 
     // Checking if operator exists
     for (String opSaved : savedOpDetails) {
-      if (opSaved.contains(operatorInitals) && opSaved.contains(locationInitials)) {
+      if (opSaved.contains(operatorInitals.toLowerCase())
+          && opSaved.contains(locationInitials.toLowerCase())
+          && opSaved.contains(lowerOperatorName)) {
         operatorExists = true;
         break;
       }

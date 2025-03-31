@@ -1008,7 +1008,7 @@ public class MainTest {
       runCommands(unpack(CREATE_14_OPERATORS, EXIT));
       runCommands(unpack(CREATE_14_OPERATORS, SEARCH_OPERATORS, "'aucland  '", EXIT));
 
-      assertContains("Operator not found: 'aucland  ' is an invalid operator ID.");
+      assertContains("Operator not found: 'aucland' is an invalid operator ID.");
     }
 
     @Test
@@ -1016,7 +1016,7 @@ public class MainTest {
       runCommands(unpack(CREATE_14_OPERATORS, EXIT));
       runCommands(unpack(CREATE_14_OPERATORS, SEARCH_OPERATORS, "'located'", EXIT));
 
-      assertContains("Operator not found: 'located' is an invalid operator ID.");
+      assertContains("Operator not found: 'aucland' is an invalid operator ID.");
     }
   }
 

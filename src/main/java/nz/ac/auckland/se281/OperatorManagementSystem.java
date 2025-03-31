@@ -6,12 +6,14 @@ import nz.ac.auckland.se281.Types.Location;
 
 public class OperatorManagementSystem {
   public HashMap<String, Integer> counts;
-  public ArrayList<String> savedOperators;
+  public ArrayList<String> savedOperators, savedOpDetails;
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {
     counts = new HashMap<>();
     savedOperators = new ArrayList<>();
+    savedOpDetails = new ArrayList<>();
+
     // initializing hashmap
     class Initialization {
       private boolean isInitialized = false;
@@ -43,21 +45,31 @@ public class OperatorManagementSystem {
     foundOperators = new ArrayList<>();
 
     // ensuring case insensitive
+    keyword = keyword.trim();
     String checkKeyword = keyword.toLowerCase();
-    checkKeyword = checkKeyword.trim(); // check if this needs to return back in error msg with trim
 
     // ensure 'located' or 'is' do not count as operatorIDs
-    if (checkKeyword.equals("located") || checkKeyword.equals("is")) {
+    if (checkKeyword.equals("located") || checkKeyword.equals("is") || checkKeyword.equals("-")) {
       MessageCli.OPERATOR_NOT_FOUND.printMessage(keyword);
       return;
     }
 
     // cycling through all saved operators for matches
-    for (String operator : savedOperators) {
-      String ignoreCaseOperator = operator.toLowerCase();
+    for (int i = 0; i < savedOpDetails.size(); i++) {
+      String ignoreCaseOperator = savedOpDetails.get(i);
+      ignoreCaseOperator = ignoreCaseOperator.toLowerCase();
       if (ignoreCaseOperator.contains(checkKeyword)) {
         operatorCount++;
-        foundOperators.add(operator);
+        String operatorSubmit = savedOperators.get(i);
+        foundOperators.add(operatorSubmit);
+      }
+    }
+
+    // print all if inputs is *
+    if (checkKeyword.equals("*")) {
+      for (String allOp : savedOperators) {
+        operatorCount++;
+        foundOperators.add(allOp);
       }
     }
 
@@ -88,6 +100,8 @@ public class OperatorManagementSystem {
       MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
     }
   }
+
+  //////////
 
   public void createOperator(String operatorName, String location) {
     Location locationFound = Location.fromString(location); // finds inputs as coded location
@@ -131,21 +145,27 @@ public class OperatorManagementSystem {
     String operatorSaved =
         MessageCli.OPERATOR_ENTRY.getMessage(operatorName, operatorID, locationAsString);
 
+    // Save Operator details
+    String savedDetails =
+        operatorName.concat(" ").concat(operatorID).concat(" ").concat(locationAsString);
+
     boolean operatorExists = false;
+
     // Checking if operator exists
-    for (String opSaved : savedOperators) {
+    for (String opSaved : savedOpDetails) {
       if (opSaved.contains(operatorInitals) && opSaved.contains(locationInitials)) {
         operatorExists = true;
         break;
       }
     }
 
-    // Deciding print
+    // Deciding print & save details
     if (operatorExists) {
       MessageCli.OPERATOR_NOT_CREATED_ALREADY_EXISTS_SAME_LOCATION.printMessage(
           operatorName, locationAsString);
     } else {
       savedOperators.add(operatorSaved);
+      savedOpDetails.add(savedDetails);
       MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorID, locationAsString);
     }
   }

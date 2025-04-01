@@ -118,6 +118,7 @@ public class OperatorManagementSystem {
     String checkOperator = operatorName.trim();
     if (checkOperator.length() < 3) {
       MessageCli.OPERATOR_NOT_CREATED_INVALID_OPERATOR_NAME.printMessage(operatorName);
+      return;
     }
 
     // Getting Location initials

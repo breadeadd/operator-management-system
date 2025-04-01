@@ -982,9 +982,12 @@ public class MainTest {
 
     @Test
     public void T4_03_add_your_own_tests_as_needed() throws Exception {
-      runCommands(CREATE_OPERATOR, "'We '", "'AKL'", EXIT);
+      runCommands(CREATE_OPERATOR, "'Yo'", "'AKL'", EXIT);
 
-      assertContains("Operator not created: 'We ' is not a valid operator name.");
+      assertContains("Operator not created: 'Yo' is not a valid operator name.");
+      assertDoesNotContain("Successfully", true);
+      assertDoesNotContain("There is", true);
+      assertDoesNotContain("There are", true);
     }
 
     @Test
@@ -1013,10 +1016,29 @@ public class MainTest {
 
     @Test
     public void T4_07_add_your_own_tests_as_needed() throws Exception {
-      runCommands(unpack(CREATE_14_OPERATORS, EXIT));
-      runCommands(unpack(CREATE_14_OPERATORS, SEARCH_OPERATORS, "'located'", EXIT));
+      runCommands(
+          CREATE_OPERATOR,
+          "'West Auckland Camel Treks'",
+          "'AKL'", //
+          CREATE_OPERATOR,
+          "'West auckland Camel Treks'",
+          "'AKL'", //
+          SEARCH_OPERATORS,
+          "*", //
+          EXIT);
 
-      assertContains("Operator not found: 'located' is an invalid operator ID.");
+      assertContains(
+          "Successfully created operator 'West Auckland Camel Treks' ('WACT-AKL-001') located in"
+              + " 'Auckland | Tāmaki Makaurau'.");
+      assertContains(
+          "Operator not created: the operator name 'West auckland Camel Treks' already exists same"
+              + " location for 'Auckland | Tāmaki Makaurau'.");
+      assertContains("There is 1 matching operator found:");
+      assertContains(
+          "* West Auckland Camel Treks ('WACT-AKL-001' located in 'Auckland | Tāmaki"
+              + " Makaurau')");
+      assertDoesNotContain("002", true);
+      assertDoesNotContain("There are", true);
     }
   }
 

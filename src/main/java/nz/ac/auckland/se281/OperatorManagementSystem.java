@@ -8,12 +8,14 @@ public class OperatorManagementSystem {
   HashMap<String, Integer> counts;
   ArrayList<String> savedOperators;
   ArrayList<String> savedOpDetails;
+  ArrayList<String> savedOperatorIDs;
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {
     counts = new HashMap<>();
     savedOperators = new ArrayList<>();
     savedOpDetails = new ArrayList<>();
+    savedOperatorIDs = new ArrayList<>();
 
     // initializing hashmap
     class Initialization {
@@ -173,14 +175,42 @@ public class OperatorManagementSystem {
     } else {
       savedOperators.add(operatorSaved);
       savedOpDetails.add(savedDetails);
+      savedOperatorIDs.add(operatorIdentity);
       MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorIdentity, locationAsString);
     }
   }
 
   //////////////////////////////////////////////////
   public void viewActivities(String operatorId) {
+    // initalise count
+    boolean IDExists = false;
+    String searchedID = "";
+    int count = 0;
+
+    // check if operatorId exists
+    for (String identity : savedOperatorIDs) {
+      if (identity.contains(operatorId)) {
+        IDExists = true;
+        searchedID = operatorId;
+        break;
+      }
+    }
+
     // if operatorId doesn't exist
-    MessageCli.OPERATOR_NOT_FOUND.printMessage(operatorId);
+    if (!IDExists) {
+      MessageCli.OPERATOR_NOT_FOUND.printMessage(operatorId);
+      return;
+    }
+
+    for (String operators : savedOpDetails) {
+      if (operators.contains(searchedID)) {
+        count++;
+      }
+    }
+
+    if (count == 0) {
+      MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
+    }
   }
 
   public void createActivity(String activityName, String activityType, String operatorId) {

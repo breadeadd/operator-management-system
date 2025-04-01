@@ -202,6 +202,7 @@ public class OperatorManagementSystem {
       return;
     }
 
+    // Check how many operators exist with searched ID
     for (String operators : savedOpDetails) {
       if (operators.contains(searchedID)) {
         count++;
@@ -214,8 +215,26 @@ public class OperatorManagementSystem {
   }
 
   public void createActivity(String activityName, String activityType, String operatorId) {
+    // intialise conditions
+    boolean IDExists = false;
+
+    // checking if activityName is valid
     if (activityName.length() < 3) {
       MessageCli.ACTIVITY_NOT_CREATED_INVALID_ACTIVITY_NAME.printMessage(activityName);
+    }
+
+    // check if operatorId exists
+    for (String identity : savedOperatorIDs) {
+      if (identity.contains(operatorId)) {
+        IDExists = true;
+        break;
+      }
+    }
+
+    // if operatorId doesn't exist
+    if (!IDExists) {
+      MessageCli.ACTIVITY_NOT_CREATED_INVALID_OPERATOR_ID.printMessage(operatorId);
+      return;
     }
   }
 

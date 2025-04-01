@@ -179,7 +179,8 @@ public class OperatorManagementSystem {
 
   //////////////////////////////////////////////////
   public void viewActivities(String operatorId) {
-    // TODO implement
+    // if operatorId doesn't exist
+    MessageCli.OPERATOR_NOT_FOUND.printMessage(operatorId);
   }
 
   public void createActivity(String activityName, String activityType, String operatorId) {

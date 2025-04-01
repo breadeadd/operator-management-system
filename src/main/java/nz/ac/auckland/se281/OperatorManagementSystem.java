@@ -5,8 +5,9 @@ import java.util.HashMap;
 import nz.ac.auckland.se281.Types.Location;
 
 public class OperatorManagementSystem {
-  public HashMap<String, Integer> counts;
-  public ArrayList<String> savedOperators, savedOpDetails;
+  HashMap<String, Integer> counts;
+  ArrayList<String> savedOperators;
+  ArrayList<String> savedOpDetails;
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {
@@ -18,7 +19,7 @@ public class OperatorManagementSystem {
     class Initialization {
       private boolean isInitialized = false;
 
-      public void InitializeCounts() {
+      public void initializeCounts() {
         // Assigning keys and values
         if (!isInitialized) {
           counts.put("AKL", 0);
@@ -34,7 +35,7 @@ public class OperatorManagementSystem {
       }
     }
 
-    new Initialization().InitializeCounts();
+    new Initialization().initializeCounts();
   }
 
   public void searchOperators(String keyword) {
@@ -140,15 +141,15 @@ public class OperatorManagementSystem {
     String threeDigitNumber = String.format("%03d", counts.get(locationInitials));
 
     // Forming operatorID
-    String operatorID = operatorInitals + "-" + locationInitials + "-" + threeDigitNumber;
+    String operatorIdentity = operatorInitals + "-" + locationInitials + "-" + threeDigitNumber;
 
     // Save operators - save operator ID to array
     String operatorSaved =
-        MessageCli.OPERATOR_ENTRY.getMessage(operatorName, operatorID, locationAsString);
+        MessageCli.OPERATOR_ENTRY.getMessage(operatorName, operatorIdentity, locationAsString);
 
     // Save Operator details
     String savedDetails =
-        operatorName.concat(" ").concat(operatorID).concat(" ").concat(locationAsString);
+        operatorName.concat(" ").concat(operatorIdentity).concat(" ").concat(locationAsString);
     savedDetails = savedDetails.toLowerCase(); // makes sure comparissons are case insensitive
 
     // Setting initial conditions to check
@@ -172,7 +173,7 @@ public class OperatorManagementSystem {
     } else {
       savedOperators.add(operatorSaved);
       savedOpDetails.add(savedDetails);
-      MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorID, locationAsString);
+      MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorIdentity, locationAsString);
     }
   }
 

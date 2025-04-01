@@ -184,7 +184,7 @@ public class OperatorManagementSystem {
   public void viewActivities(String operatorId) {
     // initalise count
     boolean IDExists = false;
-    String searchedID = "";
+    String searchedID = null;
     int count = 0;
 
     // check if operatorId exists
@@ -214,7 +214,9 @@ public class OperatorManagementSystem {
   }
 
   public void createActivity(String activityName, String activityType, String operatorId) {
-    // TODO implement
+    if (activityName.length() < 3) {
+      MessageCli.ACTIVITY_NOT_CREATED_INVALID_ACTIVITY_NAME.printMessage(activityName);
+    }
   }
 
   public void searchActivities(String keyword) {

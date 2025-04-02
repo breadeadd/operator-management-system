@@ -6,7 +6,7 @@ import nz.ac.auckland.se281.Types.Location;
 
 public class OperatorManagementSystem {
   HashMap<String, Integer> counts;
-  ArrayList<String> savedOperators;
+  ArrayList<Operator> savedOperators;
   ArrayList<String> savedOpDetails;
   ArrayList<String> savedOperatorIDs;
   ArrayList<Integer> activityCounts;
@@ -44,7 +44,7 @@ public class OperatorManagementSystem {
 
   public void searchOperators(String keyword) {
     int operatorCount = 0;
-    ArrayList<String> foundOperators;
+    ArrayList<Operator> foundOperators;
 
     // initialise found lists for each search
     foundOperators = new ArrayList<>();
@@ -60,19 +60,26 @@ public class OperatorManagementSystem {
     }
 
     // cycling through all saved operators for matches
-    for (int i = 0; i < savedOpDetails.size(); i++) {
-      String ignoreCaseOperator = savedOpDetails.get(i);
-      ignoreCaseOperator = ignoreCaseOperator.toLowerCase();
-      if (ignoreCaseOperator.contains(checkKeyword)) {
+    // for (int i = 0; i < savedOpDetails.size(); i++) {
+    //   String ignoreCaseOperator = savedOpDetails.get(i);
+    //   ignoreCaseOperator = ignoreCaseOperator.toLowerCase();
+    //   if (ignoreCaseOperator.contains(checkKeyword)) {
+    //     operatorCount++;
+    //     String operatorSubmit = savedOperators.get(i);
+    //     foundOperators.add(operatorSubmit);
+    //   }
+    // }
+
+    for (Operator savedOperator : savedOperators) {
+      if (savedOperator.name.equals(keyword) || savedOperator.location.contains(keyword)) {
         operatorCount++;
-        String operatorSubmit = savedOperators.get(i);
-        foundOperators.add(operatorSubmit);
+        foundOperators.add(savedOperator);
       }
     }
 
     // print all if inputs is *
     if (checkKeyword.equals("*")) {
-      for (String allOp : savedOperators) {
+      for (Operator allOp : savedOperators) {
         operatorCount++;
         foundOperators.add(allOp);
       }
@@ -98,8 +105,9 @@ public class OperatorManagementSystem {
       MessageCli.OPERATORS_FOUND.printMessage(
           joiningWord, Integer.toString(operatorCount), pluralOperator, ":");
       // print for each found operator
-      for (String foundOp : foundOperators) {
-        System.out.println(foundOp);
+      for (Operator foundOp : foundOperators) {
+        MessageCli.OPERATOR_ENTRY.printMessage(
+            foundOp.getName(), foundOp.getOperatorId(), foundOp.getLocation());
       }
     } else {
       MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
@@ -147,24 +155,17 @@ public class OperatorManagementSystem {
     // Forming operatorID
     String operatorIdentity = operatorInitals + "-" + locationInitials + "-" + threeDigitNumber;
 
-    // Save operators - save operator ID to array
-    String operatorSaved =
-        MessageCli.OPERATOR_ENTRY.getMessage(operatorName, operatorIdentity, locationAsString);
-
-    // Save Operator details
-    String savedDetails =
-        operatorName.concat(" ").concat(operatorIdentity).concat(" ").concat(locationAsString);
-    savedDetails = savedDetails.toLowerCase(); // makes sure comparissons are case insensitive
+    // // Save Operator details
+    // String savedDetails =
+    //     operatorName.concat(" ").concat(operatorIdentity).concat(" ").concat(locationAsString);
+    // savedDetails = savedDetails.toLowerCase(); // makes sure comparissons are case insensitive
 
     // Setting initial conditions to check
-    String lowerOperatorName = operatorName.toLowerCase();
     boolean operatorExists = false;
 
     // Checking if operator exists
-    for (String opSaved : savedOpDetails) {
-      if (opSaved.contains(operatorInitals.toLowerCase())
-          && opSaved.contains(locationInitials.toLowerCase())
-          && opSaved.contains(lowerOperatorName)) {
+    for (Operator opSaved : savedOperators) {
+      if (opSaved.getName().equals(operatorName) && opSaved.getLocation().contains(location)) {
         operatorExists = true;
         break;
       }
@@ -175,9 +176,10 @@ public class OperatorManagementSystem {
       MessageCli.OPERATOR_NOT_CREATED_ALREADY_EXISTS_SAME_LOCATION.printMessage(
           operatorName, locationAsString);
     } else {
+      // Save operators - save operator ID to array
+      Operator operatorSaved = new Operator(operatorName, operatorIdentity, locationAsString);
       savedOperators.add(operatorSaved);
-      savedOpDetails.add(savedDetails);
-      savedOperatorIDs.add(operatorIdentity);
+
       MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorIdentity, locationAsString);
     }
   }

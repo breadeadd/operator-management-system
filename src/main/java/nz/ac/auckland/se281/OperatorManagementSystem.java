@@ -235,7 +235,7 @@ public class OperatorManagementSystem {
       activityId = chosenOperator.getOperatorId().concat("-").concat(activityId);
 
       MessageCli.ACTIVITY_CREATED.printMessage(
-          activityName, activityId, activityType, chosenOperator.getLocation());
+          activityName, activityId, activityType, chosenOperator.getName());
     }
   }
 

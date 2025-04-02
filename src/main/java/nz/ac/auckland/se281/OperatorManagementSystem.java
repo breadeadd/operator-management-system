@@ -7,17 +7,13 @@ import nz.ac.auckland.se281.Types.Location;
 public class OperatorManagementSystem {
   HashMap<String, Integer> counts;
   ArrayList<Operator> savedOperators;
-  ArrayList<String> savedOpDetails;
-  ArrayList<String> savedOperatorIDs;
-  ArrayList<Integer> activityCounts;
+  ArrayList<Integer> savedActivities;
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {
     counts = new HashMap<>();
     savedOperators = new ArrayList<>();
-    savedOpDetails = new ArrayList<>();
-    savedOperatorIDs = new ArrayList<>();
-    activityCounts = new ArrayList<>();
+    savedActivities = new ArrayList<>();
 
     // initializing hashmap
     class Initialization {
@@ -58,17 +54,6 @@ public class OperatorManagementSystem {
       MessageCli.OPERATOR_NOT_FOUND.printMessage(keyword);
       return;
     }
-
-    // cycling through all saved operators for matches
-    // for (int i = 0; i < savedOpDetails.size(); i++) {
-    //   String ignoreCaseOperator = savedOpDetails.get(i);
-    //   ignoreCaseOperator = ignoreCaseOperator.toLowerCase();
-    //   if (ignoreCaseOperator.contains(checkKeyword)) {
-    //     operatorCount++;
-    //     String operatorSubmit = savedOperators.get(i);
-    //     foundOperators.add(operatorSubmit);
-    //   }
-    // }
 
     for (Operator savedOperator : savedOperators) {
       if (savedOperator.name.equals(keyword) || savedOperator.location.contains(keyword)) {
@@ -155,11 +140,6 @@ public class OperatorManagementSystem {
     // Forming operatorID
     String operatorIdentity = operatorInitals + "-" + locationInitials + "-" + threeDigitNumber;
 
-    // // Save Operator details
-    // String savedDetails =
-    //     operatorName.concat(" ").concat(operatorIdentity).concat(" ").concat(locationAsString);
-    // savedDetails = savedDetails.toLowerCase(); // makes sure comparissons are case insensitive
-
     // Setting initial conditions to check
     boolean operatorExists = false;
 
@@ -189,14 +169,14 @@ public class OperatorManagementSystem {
   public void viewActivities(String operatorId) {
     // initalise count
     boolean IDExists = false;
-    String searchedID = null;
-    int count = 0;
+    // String searchedID = null;
+    // int count = 0;
 
     // check if operatorId exists
-    for (String identity : savedOperatorIDs) {
-      if (identity.contains(operatorId)) {
+    for (Operator identity : savedOperators) {
+      if (identity.getOperatorId().equals(operatorId)) {
         IDExists = true;
-        searchedID = operatorId;
+        // searchedID = operatorId;
         break;
       }
     }
@@ -208,13 +188,14 @@ public class OperatorManagementSystem {
     }
 
     // Check how many operators exist with searched ID
-    for (String operators : savedOpDetails) {
-      if (operators.contains(searchedID)) {
-        count++;
-      }
-    }
+    // for (Activities activity : savedActivities) {
+    //   if () {
+    //     count++;
+    //   }
+    // }
 
-    if (count == 0) {
+    // if now activities don't exist
+    if (savedActivities.isEmpty()) {
       MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
     }
   }
@@ -229,8 +210,8 @@ public class OperatorManagementSystem {
     }
 
     // check if operatorId exists
-    for (String identity : savedOperatorIDs) {
-      if (identity.contains(operatorId)) {
+    for (Operator identity : savedOperators) {
+      if (identity.getOperatorId().equals(operatorId)) {
         IDExists = true;
         break;
       }

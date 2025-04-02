@@ -165,7 +165,8 @@ public class OperatorManagementSystem {
 
     // Checking if operator exists
     for (Operator opSaved : savedOperators) {
-      if (opSaved.getName().equals(operatorName) && opSaved.getLocation().contains(location)) {
+      if (opSaved.getName().equals(operatorName)
+          && opSaved.getLocation().equals(locationAsString)) {
         operatorExists = true;
         break;
       }

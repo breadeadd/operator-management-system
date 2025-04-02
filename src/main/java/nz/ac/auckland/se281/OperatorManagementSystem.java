@@ -9,6 +9,7 @@ public class OperatorManagementSystem {
   ArrayList<String> savedOperators;
   ArrayList<String> savedOpDetails;
   ArrayList<String> savedOperatorIDs;
+  ArrayList<Integer> activityCounts;
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {
@@ -16,6 +17,7 @@ public class OperatorManagementSystem {
     savedOperators = new ArrayList<>();
     savedOpDetails = new ArrayList<>();
     savedOperatorIDs = new ArrayList<>();
+    activityCounts = new ArrayList<>();
 
     // initializing hashmap
     class Initialization {
@@ -235,6 +237,9 @@ public class OperatorManagementSystem {
     if (!IDExists) {
       MessageCli.ACTIVITY_NOT_CREATED_INVALID_OPERATOR_ID.printMessage(operatorId);
       return;
+    } else {
+      MessageCli.ACTIVITY_CREATED.printMessage(
+          "activityName", "operatorId", activityType, "location");
     }
   }
 

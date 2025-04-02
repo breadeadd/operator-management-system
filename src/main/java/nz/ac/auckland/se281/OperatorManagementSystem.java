@@ -7,7 +7,7 @@ import nz.ac.auckland.se281.Types.Location;
 public class OperatorManagementSystem {
   HashMap<String, Integer> counts;
   ArrayList<Operator> savedOperators;
-  ArrayList<Integer> savedActivities;
+  ArrayList<Activities> savedActivities;
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {
@@ -203,16 +203,19 @@ public class OperatorManagementSystem {
   public void createActivity(String activityName, String activityType, String operatorId) {
     // intialise conditions
     boolean IDExists = false;
+    Operator chosenOperator = null;
 
     // checking if activityName is valid
     if (activityName.length() < 3) {
       MessageCli.ACTIVITY_NOT_CREATED_INVALID_ACTIVITY_NAME.printMessage(activityName);
+      return;
     }
 
     // check if operatorId exists
-    for (Operator identity : savedOperators) {
-      if (identity.getOperatorId().equals(operatorId)) {
+    for (Operator operator : savedOperators) {
+      if (operator.getOperatorId().equals(operatorId)) {
         IDExists = true;
+        chosenOperator = operator;
         break;
       }
     }
@@ -222,8 +225,17 @@ public class OperatorManagementSystem {
       MessageCli.ACTIVITY_NOT_CREATED_INVALID_OPERATOR_ID.printMessage(operatorId);
       return;
     } else {
+      // adding new activity to list
+      Activities newActivity = new Activities(activityName, activityType, chosenOperator);
+      savedActivities.add(newActivity);
+      // creating activity count
+      chosenOperator.incrementCount();
+      int activityCount = chosenOperator.getActivityCount();
+      String activityId = String.format("%03d", activityCount);
+      activityId = chosenOperator.getOperatorId().concat("-").concat(activityId);
+
       MessageCli.ACTIVITY_CREATED.printMessage(
-          "activityName", "operatorId", activityType, "location");
+          activityName, activityId, activityType, chosenOperator.getLocation());
     }
   }
 

@@ -277,7 +277,8 @@ public class OperatorManagementSystem {
     // initialise found lists for each search
     foundActivities = new ArrayList<>();
 
-    keyword = keyword.trim();
+    keyword = keyword.trim().toLowerCase();
+    // need to get to be case insensitive search
 
     if (keyword.equals("*")) {
       for (Activities activity : savedActivities) {
@@ -286,9 +287,9 @@ public class OperatorManagementSystem {
       }
     } else {
       for (Activities activity : savedActivities) {
-        if (activity.getName().contains(keyword)
-            || activity.getType().contains(keyword)
-            || activity.getOperatorLocation().contains(keyword)) {
+        if (activity.getName().toLowerCase().contains(keyword)
+            || activity.getType().toLowerCase().contains(keyword)
+            || activity.getOperatorLocation().toLowerCase().contains(keyword)) {
           foundActivities.add(activity);
           activityCount++;
         }

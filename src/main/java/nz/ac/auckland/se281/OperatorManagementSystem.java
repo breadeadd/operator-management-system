@@ -270,35 +270,42 @@ public class OperatorManagementSystem {
   }
 
   public void searchActivities(String keyword) {
+    int activityCount = 0;
     // found array list
     ArrayList<Activities> foundActivities;
 
     // initialise found lists for each search
     foundActivities = new ArrayList<>();
 
-    if (keyword == "*") {
-      for (Activities activity : foundActivities) {
+    if (keyword.equals("*")) {
+      for (Activities activity : savedActivities) {
         foundActivities.add(activity);
+        activityCount++;
       }
     }
 
-    // // checking plural
-    // String pluralOperator;
-    // String joiningWord;
-    // if (activityCount > 1) {
-    //   pluralOperator = "ies";
-    //   joiningWord = "are";
-    // } else {
-    //   pluralOperator = "y";
-    //   joiningWord = "is";
-    // }
-
     if (foundActivities.isEmpty()) {
       MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
+      return;
+    } else {
+      // checking plural
+      String pluralOperator;
+      String joiningWord;
+      if (activityCount > 1) {
+        pluralOperator = "ies";
+        joiningWord = "are";
+      } else {
+        pluralOperator = "y";
+        joiningWord = "is";
+      }
+
+      MessageCli.ACTIVITIES_FOUND.printMessage(
+          joiningWord, activityCount + "", pluralOperator, ":");
     }
 
     for (Activities activity : foundActivities) {
-      MessageCli.ACTIVITIES_FOUND.printMessage("is/are", "no/", "ies", ".");
+      MessageCli.ACTIVITY_ENTRY.printMessage(
+          activity.getName(), activity.getId(), activity.getType(), activity.getActivityLocation());
     }
   }
 

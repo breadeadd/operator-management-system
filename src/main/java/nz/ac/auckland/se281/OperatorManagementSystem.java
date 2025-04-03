@@ -277,10 +277,19 @@ public class OperatorManagementSystem {
     // initialise found lists for each search
     foundActivities = new ArrayList<>();
 
+    keyword = keyword.trim();
+
     if (keyword.equals("*")) {
       for (Activities activity : savedActivities) {
         foundActivities.add(activity);
         activityCount++;
+      }
+    } else {
+      for (Activities activity : savedActivities) {
+        if (activity.getName().contains(keyword)) {
+          foundActivities.add(activity);
+          activityCount++;
+        }
       }
     }
 

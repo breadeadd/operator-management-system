@@ -6,6 +6,7 @@ public class Activities {
   public String activityId;
   public String location;
   public Operator operator;
+  public String operatorLocation;
 
   public Activities(String name, String type, String activityId, Operator operator) {
     this.name = name;
@@ -13,6 +14,7 @@ public class Activities {
     this.activityId = activityId;
     this.operator = operator;
     location = operator.getName();
+    operatorLocation = operator.getLocation();
   }
 
   public String getName() {
@@ -33,5 +35,9 @@ public class Activities {
 
   public Operator getOperator() {
     return operator;
+  }
+
+  public String getOperatorLocation() {
+    return operatorLocation;
   }
 }

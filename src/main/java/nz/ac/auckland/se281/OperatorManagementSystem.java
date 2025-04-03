@@ -286,7 +286,9 @@ public class OperatorManagementSystem {
       }
     } else {
       for (Activities activity : savedActivities) {
-        if (activity.getName().contains(keyword) || activity.getType().contains(keyword)) {
+        if (activity.getName().contains(keyword)
+            || activity.getType().contains(keyword)
+            || activity.getOperatorLocation().contains(keyword)) {
           foundActivities.add(activity);
           activityCount++;
         }

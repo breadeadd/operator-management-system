@@ -170,7 +170,7 @@ public class OperatorManagementSystem {
     // initalise count
     boolean IDExists = false;
     Operator chosenOperator = null;
-    int count = 0;
+    int activityCount = 0;
 
     // found array list
     ArrayList<Activities> foundActivities;
@@ -196,9 +196,20 @@ public class OperatorManagementSystem {
     // checking if operators match of all activities
     for (Activities activity : savedActivities) {
       if (activity.getOperator().equals(chosenOperator)) {
-        count++;
+        activityCount++;
         foundActivities.add(activity);
       }
+    }
+
+    // checking plural
+    String pluralOperator;
+    String joiningWord;
+    if (activityCount > 1) {
+      pluralOperator = "ies";
+      joiningWord = "are";
+    } else {
+      pluralOperator = "y";
+      joiningWord = "is";
     }
 
     // if now activities don't exist
@@ -207,7 +218,8 @@ public class OperatorManagementSystem {
       return;
     }
 
-    MessageCli.ACTIVITIES_FOUND.printMessage("are", String.valueOf(count), "ies", ":");
+    MessageCli.ACTIVITIES_FOUND.printMessage(
+        joiningWord, String.valueOf(activityCount), pluralOperator, ":");
 
     for (Activities activity : foundActivities) {
       MessageCli.ACTIVITY_ENTRY.printMessage(
@@ -258,7 +270,36 @@ public class OperatorManagementSystem {
   }
 
   public void searchActivities(String keyword) {
-    // TODO implement
+    // found array list
+    ArrayList<Activities> foundActivities;
+
+    // initialise found lists for each search
+    foundActivities = new ArrayList<>();
+
+    if (keyword == "*") {
+      for (Activities activity : foundActivities) {
+        foundActivities.add(activity);
+      }
+    }
+
+    // // checking plural
+    // String pluralOperator;
+    // String joiningWord;
+    // if (activityCount > 1) {
+    //   pluralOperator = "ies";
+    //   joiningWord = "are";
+    // } else {
+    //   pluralOperator = "y";
+    //   joiningWord = "is";
+    // }
+
+    if (foundActivities.isEmpty()) {
+      MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
+    }
+
+    for (Activities activity : foundActivities) {
+      MessageCli.ACTIVITIES_FOUND.printMessage("is/are", "no/", "ies", ".");
+    }
   }
 
   public void addPublicReview(String activityId, String[] options) {

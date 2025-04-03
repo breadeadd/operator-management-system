@@ -7,11 +7,12 @@ public class Activities {
   public String location;
   public Operator operator;
 
-  public Activities(String name, String type, Operator operator) {
+  public Activities(String name, String type, String activityId, Operator operator) {
     this.name = name;
     this.type = type;
-    activityId = operator.getOperatorId(); // need to add number count
-    location = operator.getLocation();
+    this.activityId = activityId;
+    this.operator = operator;
+    location = operator.getName();
   }
 
   public String getName() {
@@ -26,7 +27,11 @@ public class Activities {
     return activityId;
   }
 
-  public String getLocation() {
+  public String getActivityLocation() {
     return location;
+  }
+
+  public Operator getOperator() {
+    return operator;
   }
 }

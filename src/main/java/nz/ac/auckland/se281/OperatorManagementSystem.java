@@ -169,14 +169,20 @@ public class OperatorManagementSystem {
   public void viewActivities(String operatorId) {
     // initalise count
     boolean IDExists = false;
-    // String searchedID = null;
-    // int count = 0;
+    Operator chosenOperator = null;
+    int count = 0;
+
+    // found array list
+    ArrayList<Activities> foundActivities;
+
+    // initialise found lists for each search
+    foundActivities = new ArrayList<>();
 
     // check if operatorId exists
     for (Operator identity : savedOperators) {
       if (identity.getOperatorId().equals(operatorId)) {
+        chosenOperator = identity;
         IDExists = true;
-        // searchedID = operatorId;
         break;
       }
     }
@@ -187,19 +193,29 @@ public class OperatorManagementSystem {
       return;
     }
 
-    // Check how many operators exist with searched ID
-    // for (Activities activity : savedActivities) {
-    //   if () {
-    //     count++;
-    //   }
-    // }
+    // checking if operators match of all activities
+    for (Activities activity : savedActivities) {
+      if (activity.getOperator().equals(chosenOperator)) {
+        count++;
+        foundActivities.add(activity);
+      }
+    }
 
     // if now activities don't exist
     if (savedActivities.isEmpty()) {
       MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
+      return;
+    }
+
+    MessageCli.ACTIVITIES_FOUND.printMessage("are", String.valueOf(count), "ies", ":");
+
+    for (Activities activity : foundActivities) {
+      MessageCli.ACTIVITY_ENTRY.printMessage(
+          activity.getName(), activity.getId(), activity.getType(), activity.getActivityLocation());
     }
   }
 
+  ///////
   public void createActivity(String activityName, String activityType, String operatorId) {
     // intialise conditions
     boolean IDExists = false;
@@ -224,19 +240,21 @@ public class OperatorManagementSystem {
     if (!IDExists) {
       MessageCli.ACTIVITY_NOT_CREATED_INVALID_OPERATOR_ID.printMessage(operatorId);
       return;
-    } else {
-      // adding new activity to list
-      Activities newActivity = new Activities(activityName, activityType, chosenOperator);
-      savedActivities.add(newActivity);
-      // creating activity count
-      chosenOperator.incrementCount();
-      int activityCount = chosenOperator.getActivityCount();
-      String activityId = String.format("%03d", activityCount);
-      activityId = chosenOperator.getOperatorId().concat("-").concat(activityId);
-
-      MessageCli.ACTIVITY_CREATED.printMessage(
-          activityName, activityId, activityType, chosenOperator.getName());
     }
+
+    // creating activity count
+    chosenOperator.incrementCount();
+    int activityCount = chosenOperator.getActivityCount();
+    String activityId = String.format("%03d", activityCount);
+    activityId = chosenOperator.getOperatorId().concat("-").concat(activityId);
+
+    // adding new activity to list
+    Activities newActivity = new Activities(activityName, activityType, activityId, chosenOperator);
+    savedActivities.add(newActivity);
+
+    // Messages
+    MessageCli.ACTIVITY_CREATED.printMessage(
+        activityName, activityId, activityType, chosenOperator.getName());
   }
 
   public void searchActivities(String keyword) {

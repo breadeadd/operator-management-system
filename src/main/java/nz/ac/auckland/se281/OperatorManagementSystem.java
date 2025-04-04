@@ -5,9 +5,9 @@ import java.util.HashMap;
 import nz.ac.auckland.se281.Types.Location;
 
 public class OperatorManagementSystem {
-  HashMap<String, Integer> counts;
-  ArrayList<Operator> savedOperators;
-  ArrayList<Activities> savedActivities;
+  private HashMap<String, Integer> counts;
+  private ArrayList<Operator> savedOperators;
+  private ArrayList<Activities> savedActivities;
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {
@@ -138,7 +138,7 @@ public class OperatorManagementSystem {
     String threeDigitNumber = String.format("%03d", counts.get(locationInitials));
 
     // Forming operatorID
-    String operatorIdentity = operatorInitals + "-" + locationInitials + "-" + threeDigitNumber;
+    String operatorId = operatorInitals + "-" + locationInitials + "-" + threeDigitNumber;
 
     // Setting initial conditions to check
     boolean operatorExists = false;
@@ -158,10 +158,10 @@ public class OperatorManagementSystem {
           operatorName, locationAsString);
     } else {
       // Save operators - save operator ID to array
-      Operator operatorSaved = new Operator(operatorName, operatorIdentity, locationAsString);
+      Operator operatorSaved = new Operator(operatorName, operatorId, locationAsString);
       savedOperators.add(operatorSaved);
 
-      MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorIdentity, locationAsString);
+      MessageCli.OPERATOR_CREATED.printMessage(operatorName, operatorId, locationAsString);
     }
   }
 
@@ -230,7 +230,7 @@ public class OperatorManagementSystem {
   ///////
   public void createActivity(String activityName, String activityType, String operatorId) {
     // intialise conditions
-    boolean IDExists = false;
+    boolean IdExists = false;
     Operator chosenOperator = null;
 
     // checking if activityName is valid
@@ -242,14 +242,14 @@ public class OperatorManagementSystem {
     // check if operatorId exists
     for (Operator operator : savedOperators) {
       if (operator.getOperatorId().equals(operatorId)) {
-        IDExists = true;
+        IdExists = true;
         chosenOperator = operator;
         break;
       }
     }
 
     // if operatorId doesn't exist
-    if (!IDExists) {
+    if (!IdExists) {
       MessageCli.ACTIVITY_NOT_CREATED_INVALID_OPERATOR_ID.printMessage(operatorId);
       return;
     }

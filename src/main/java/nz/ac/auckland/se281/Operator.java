@@ -1,10 +1,10 @@
 package nz.ac.auckland.se281;
 
 public class Operator {
-  public String name;
-  public String location;
-  public String operatorId;
-  public int activityCount;
+  String name;
+  String location;
+  String operatorId;
+  int activityCount;
 
   public Operator(String name, String operatorId, String location) {
     this.name = name;

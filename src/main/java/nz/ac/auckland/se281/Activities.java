@@ -1,12 +1,12 @@
 package nz.ac.auckland.se281;
 
 public class Activities {
-  public String name;
-  public String type;
-  public String activityId;
-  public String location;
-  public Operator operator;
-  public String operatorLocation;
+  String name;
+  String type;
+  String activityId;
+  String location;
+  Operator operator;
+  String operatorLocation;
 
   public Activities(String name, String type, String activityId, Operator operator) {
     this.name = name;

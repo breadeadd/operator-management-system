@@ -8,12 +8,14 @@ public class OperatorManagementSystem {
   private HashMap<String, Integer> counts;
   private ArrayList<Operator> savedOperators;
   private ArrayList<Activities> savedActivities;
+  private ArrayList<Review> savedReviews;
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {
     counts = new HashMap<>();
     savedOperators = new ArrayList<>();
     savedActivities = new ArrayList<>();
+    savedReviews = new ArrayList<>();
 
     // initializing hashmap
     class Initialization {
@@ -336,7 +338,26 @@ public class OperatorManagementSystem {
   }
 
   public void displayReviews(String activityId) {
-    // TODO implement
+    int count = 0;
+    Activities reviewedActivity = null;
+
+    for (Activities checkActivities : savedActivities) {
+      if (checkActivities.getId().equals(activityId)) {
+        reviewedActivity = checkActivities;
+      }
+    }
+
+    for (Review checkReview : savedReviews) {
+      count++;
+    }
+
+    if (reviewedActivity == null) {
+      return;
+    }
+
+    if (count == 0) {
+      MessageCli.REVIEWS_FOUND.printMessage("are", "no", "s", reviewedActivity.getName());
+    }
   }
 
   public void endorseReview(String reviewId) {

@@ -321,6 +321,8 @@ public class OperatorManagementSystem {
     }
   }
 
+  /////////////////////////////
+
   public void addPublicReview(String activityId, String[] options) {
     // TODO implement
   }

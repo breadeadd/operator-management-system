@@ -390,11 +390,122 @@ public class OperatorManagementSystem {
     }
 
   public void addPrivateReview(String activityId, String[] options) {
-    // TODO implement
+    Boolean idExists = false;
+    Activities chosenActivity = null; 
+
+    for (Activities checkActivity : savedActivities) {
+      //checks if input id is exists in system
+      if (checkActivity.getId().equals(activityId)) {
+        chosenActivity = checkActivity;
+        if (!idExists) {
+          idExists = true;
+          break;
+        }
+      } 
+    }
+
+    //check if activityId exists before proceeding
+    if (!idExists) {
+      MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
+      return;
+    }
+
+    //setting rating to int type
+    int rating = 0;
+    switch (options[2]) {
+      case "1":
+      rating = 1;
+      case "2":
+      rating = 2;
+      case "3":
+      rating = 3;
+      case "4":
+      rating = 4;
+      case "5":
+      rating = 5;
+
+        break;
+    
+      default:
+        break;
+    }
+
+    //creating review ID
+
+    chosenActivity.incrementCount();
+    int reviewCount = chosenActivity.getCount();
+    String reviewId = String.format("R%d", reviewCount);
+    reviewId = chosenActivity.getId().concat("-").concat(reviewId);
+
+    //PublicR() name, anon, rating, comment
+    Review review = new PrivateR(options[0], options[1], rating, options[3], reviewId);
+    savedReviews.add(review);
+    MessageCli.REVIEW_ADDED.printMessage("Private", reviewId, chosenActivity.getName());
+
   }
 
   public void addExpertReview(String activityId, String[] options) {
-    // TODO implement
+    Boolean idExists = false;
+    Activities chosenActivity = null; 
+
+    for (Activities checkActivity : savedActivities) {
+      //checks if input id is exists in system
+      if (checkActivity.getId().equals(activityId)) {
+        chosenActivity = checkActivity;
+        if (!idExists) {
+          idExists = true;
+          break;
+        }
+      } 
+    }
+
+    //check if activityId exists before proceeding
+    if (!idExists) {
+      MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
+      return;
+    }
+
+    //Processing options string
+    //check if anon exists
+    Boolean recommend;
+    if (options[3].equals("n")){
+      recommend = false;
+    } else {
+      recommend = true;
+    }
+
+    //setting rating to int type
+    int rating = 0;
+    switch (options[2]) {
+      case "1":
+      rating = 1;
+      case "2":
+      rating = 2;
+      case "3":
+      rating = 3;
+      case "4":
+      rating = 4;
+      case "5":
+      rating = 5;
+
+        break;
+    
+      default:
+        break;
+    }
+
+      //creating review ID
+
+    chosenActivity.incrementCount();
+    int reviewCount = chosenActivity.getCount();
+    String reviewId = String.format("R%d", reviewCount);
+    reviewId = chosenActivity.getId().concat("-").concat(reviewId);
+
+    //PublicR() name, anon, rating, comment
+    Review review = new ExpertR(options[0], rating, options[2], recommend, reviewId);
+    savedReviews.add(review);
+    MessageCli.REVIEW_ADDED.printMessage("Expert", reviewId, chosenActivity.getName());
+
   }
 
   public void displayReviews(String activityId) {

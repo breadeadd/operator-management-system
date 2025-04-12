@@ -340,10 +340,46 @@ public class OperatorManagementSystem {
         } 
       }
 
+      //check if activityId exists before proceeding
       if (!idExists) {
         MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
         return;
       }
+
+      //Processing options string
+      //check if anon exists
+      Boolean anon;
+      if (options[1].equals("n")){
+        anon = false;
+      } else {
+        anon = true;
+      }
+
+      //setting rating to int type
+      int rating = 0;
+      switch (options[2]) {
+        case "1":
+        rating = 1;
+        case "2":
+        rating = 2;
+        case "3":
+        rating = 3;
+        case "4":
+        rating = 4;
+        case "5":
+        rating = 5;
+
+          break;
+      
+        default:
+          break;
+      }
+
+      //PublicR() name, anon, rating, comment
+      Review review = new PublicR(options[0], anon, rating, options[3]);
+      savedReviews.add(review);
+      MessageCli.REVIEW_ADDED.printMessage(options[0], options[2], activityId);
+
     }
 
   public void addPrivateReview(String activityId, String[] options) {

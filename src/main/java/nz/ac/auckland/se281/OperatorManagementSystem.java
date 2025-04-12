@@ -360,17 +360,20 @@ public class OperatorManagementSystem {
       switch (options[2]) {
         case "1":
         rating = 1;
+        break;
         case "2":
         rating = 2;
+        break;
         case "3":
         rating = 3;
+        break;
         case "4":
         rating = 4;
+        break;
         case "5":
         rating = 5;
-
-          break;
-      
+        break;
+              
         default:
           break;
       }
@@ -415,17 +418,20 @@ public class OperatorManagementSystem {
     switch (options[2]) {
       case "1":
       rating = 1;
+      break;
       case "2":
       rating = 2;
+      break;
       case "3":
       rating = 3;
+      break;
       case "4":
       rating = 4;
+      break;
       case "5":
       rating = 5;
-
-        break;
-    
+      break;
+            
       default:
         break;
     }
@@ -479,17 +485,20 @@ public class OperatorManagementSystem {
     switch (options[2]) {
       case "1":
       rating = 1;
+      break;
       case "2":
       rating = 2;
+      break;
       case "3":
       rating = 3;
+      break;
       case "4":
       rating = 4;
+      break;
       case "5":
       rating = 5;
-
-        break;
-    
+      break;
+            
       default:
         break;
     }
@@ -509,6 +518,8 @@ public class OperatorManagementSystem {
   }
 
   public void displayReviews(String activityId) {
+    //found reviews
+    ArrayList<Review> foundReviews = new ArrayList<>();
     int count = 0;
     Activities reviewedActivity = null;
     Boolean idExists = false;
@@ -534,8 +545,43 @@ public class OperatorManagementSystem {
       return;
     }
 
+    //finding all saved reviews at an activity
+    for (Review review : savedReviews) {
+      if (review.getId().contains(activityId)){
+        foundReviews.add(review);
+      }
+    }
+
+    // checking plural
+    String pluralOperator;
+    String joiningWord;
+    if (count > 1) {
+      pluralOperator = "s";
+      joiningWord = "are";
+    } else {
+      pluralOperator = "";
+      joiningWord = "is";
+    }
+
     if (count == 0) {
       MessageCli.REVIEWS_FOUND.printMessage("are", "no", "s", reviewedActivity.getName());
+    } else {
+      MessageCli.REVIEWS_FOUND.printMessage(joiningWord, count + "", pluralOperator, reviewedActivity.getName());
+      for (Review review : foundReviews) {
+        //Get Review Type
+        String reviewType = "";
+        if (review instanceof PublicR) {
+          reviewType = "Public";
+        } else if (review instanceof PrivateR) {
+          reviewType = "Private";
+        } else if (review instanceof ExpertR) {
+          reviewType = "Expert";
+        }
+        
+        MessageCli.REVIEW_ENTRY_HEADER.printMessage(review.getRating()+"", "5", reviewType, review.getId(), review.getName());
+        MessageCli.REVIEW_ENTRY_REVIEW_TEXT.printMessage(review.getComment());
+
+      }
     }
   }
 

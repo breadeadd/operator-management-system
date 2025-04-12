@@ -326,8 +326,25 @@ public class OperatorManagementSystem {
   /////////////////////////////
 
   public void addPublicReview(String activityId, String[] options) {
-    // TODO implement
-  }
+      Boolean idExists = false;
+      Activities activityBeingReview; 
+
+      for (Activities checkActivity : savedActivities) {
+        //checks if input id is exists in system
+        if (checkActivity.getId().equals(activityId)) {
+          activityBeingReview = checkActivity;
+          if (!idExists) {
+            idExists = true;
+            break;
+          }
+        } 
+      }
+
+      if (!idExists) {
+        MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
+        return;
+      }
+    }
 
   public void addPrivateReview(String activityId, String[] options) {
     // TODO implement
@@ -340,11 +357,21 @@ public class OperatorManagementSystem {
   public void displayReviews(String activityId) {
     int count = 0;
     Activities reviewedActivity = null;
+    Boolean idExists = false;
 
     for (Activities checkActivities : savedActivities) {
+      //checks if input id is exists in system
       if (checkActivities.getId().equals(activityId)) {
         reviewedActivity = checkActivities;
-      }
+        if (!idExists) {
+          idExists = true;
+        }
+      } 
+    }
+
+    if (!idExists) {
+      MessageCli.REVIEW_NOT_FOUND.printMessage(activityId);
+      return;
     }
 
     for (Review checkReview : savedReviews) {

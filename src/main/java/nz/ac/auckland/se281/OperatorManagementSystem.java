@@ -327,12 +327,12 @@ public class OperatorManagementSystem {
 
   public void addPublicReview(String activityId, String[] options) {
       Boolean idExists = false;
-      Activities activityBeingReview; 
+      Activities chosenActivity = null; 
 
       for (Activities checkActivity : savedActivities) {
         //checks if input id is exists in system
         if (checkActivity.getId().equals(activityId)) {
-          activityBeingReview = checkActivity;
+          chosenActivity = checkActivity;
           if (!idExists) {
             idExists = true;
             break;
@@ -375,10 +375,17 @@ public class OperatorManagementSystem {
           break;
       }
 
+      //creating review ID
+
+    chosenActivity.incrementCount();
+    int reviewCount = chosenActivity.getCount();
+    String reviewId = String.format("R%d", reviewCount);
+    reviewId = chosenActivity.getId().concat("-").concat(reviewId);
+
       //PublicR() name, anon, rating, comment
-      Review review = new PublicR(options[0], anon, rating, options[3]);
+      Review review = new PublicR(options[0], anon, rating, options[3], reviewId);
       savedReviews.add(review);
-      MessageCli.REVIEW_ADDED.printMessage(options[0], options[2], activityId);
+      MessageCli.REVIEW_ADDED.printMessage("Public", reviewId, chosenActivity.getName());
 
     }
 
@@ -410,9 +417,7 @@ public class OperatorManagementSystem {
       return;
     }
 
-    for (Review checkReview : savedReviews) {
-      count++;
-    }
+    count = savedReviews.size();
 
     if (reviewedActivity == null) {
       return;

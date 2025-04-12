@@ -3,8 +3,8 @@ package nz.ac.auckland.se281;
 public class PublicR extends Review {
   Boolean anon;
 
-  public PublicR(String name, Boolean anon, int rating, String comment) {
-    super(name, rating, comment);
+  public PublicR(String name, Boolean anon, int rating, String comment, String reviewId) {
+    super(name, rating, comment, reviewId);
     this.anon = anon;
   }
 }

@@ -7,6 +7,7 @@ public class Activities {
   String location;
   Operator operator;
   String operatorLocation;
+  int reviewCount;
 
   public Activities(String name, String type, String activityId, Operator operator) {
     this.name = name;
@@ -39,5 +40,14 @@ public class Activities {
 
   public String getOperatorLocation() {
     return operatorLocation;
+  }
+
+  public int incrementCount(){
+    reviewCount++;
+    return reviewCount;
+  }
+
+  public int getCount() {
+    return reviewCount;
   }
 }

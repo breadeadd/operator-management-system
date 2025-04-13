@@ -326,212 +326,209 @@ public class OperatorManagementSystem {
   /////////////////////////////
 
   public void addPublicReview(String activityId, String[] options) {
-      Boolean idExists = false;
-      Activities chosenActivity = null; 
-
-      for (Activities checkActivity : savedActivities) {
-        //checks if input id is exists in system
-        if (checkActivity.getId().equals(activityId)) {
-          chosenActivity = checkActivity;
-          if (!idExists) {
-            idExists = true;
-            break;
-          }
-        } 
-      }
-
-      //check if activityId exists before proceeding
-      if (!idExists) {
-        MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
-        return;
-      }
-
-      //Processing options string
-      //check if anon exists
-      Boolean anon;
-      if (options[1].equals("n")){
-        anon = false;
-      } else {
-        anon = true;
-      }
-
-      //setting rating to int type
-      int rating = 0;
-      switch (options[2]) {
-        case "1":
-        rating = 1;
-        break;
-        case "2":
-        rating = 2;
-        break;
-        case "3":
-        rating = 3;
-        break;
-        case "4":
-        rating = 4;
-        break;
-        case "5":
-        rating = 5;
-        break;
-              
-        default:
-          break;
-      }
-
-      //creating review ID
-
-    chosenActivity.incrementCount();
-    int reviewCount = chosenActivity.getCount();
-    String reviewId = String.format("R%d", reviewCount);
-    reviewId = chosenActivity.getId().concat("-").concat(reviewId);
-
-      //PublicR() name, anon, rating, comment
-      Review review = new PublicR(options[0], anon, rating, options[3], reviewId);
-      savedReviews.add(review);
-      MessageCli.REVIEW_ADDED.printMessage("Public", reviewId, chosenActivity.getName());
-
-    }
-
-  public void addPrivateReview(String activityId, String[] options) {
     Boolean idExists = false;
-    Activities chosenActivity = null; 
+    Activities chosenActivity = null;
 
     for (Activities checkActivity : savedActivities) {
-      //checks if input id is exists in system
+      // checks if input id is exists in system
       if (checkActivity.getId().equals(activityId)) {
         chosenActivity = checkActivity;
         if (!idExists) {
           idExists = true;
           break;
         }
-      } 
+      }
     }
 
-    //check if activityId exists before proceeding
+    // check if activityId exists before proceeding
     if (!idExists) {
       MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
       return;
     }
 
-    //setting rating to int type
+    // Processing options string
+    // check if anon exists
+    Boolean anon;
+    if (options[1].equals("n")) {
+      anon = false;
+    } else {
+      anon = true;
+    }
+
+    // setting rating to int type
     int rating = 0;
     switch (options[2]) {
       case "1":
-      rating = 1;
-      break;
+        rating = 1;
+        break;
       case "2":
-      rating = 2;
-      break;
+        rating = 2;
+        break;
       case "3":
-      rating = 3;
-      break;
+        rating = 3;
+        break;
       case "4":
-      rating = 4;
-      break;
+        rating = 4;
+        break;
       case "5":
-      rating = 5;
-      break;
-            
+        rating = 5;
+        break;
+
       default:
         break;
     }
 
-    //creating review ID
+    // creating review ID
 
     chosenActivity.incrementCount();
     int reviewCount = chosenActivity.getCount();
     String reviewId = String.format("R%d", reviewCount);
     reviewId = chosenActivity.getId().concat("-").concat(reviewId);
 
-    //PublicR() name, anon, rating, comment
-    Review review = new PrivateR(options[0], options[1], rating, options[3], reviewId);
+    // PublicR() name, anon, rating, comment
+    Review review = new PublicR(options[0], anon, rating, options[3], reviewId);
     savedReviews.add(review);
-    MessageCli.REVIEW_ADDED.printMessage("Private", reviewId, chosenActivity.getName());
-
+    MessageCli.REVIEW_ADDED.printMessage("Public", reviewId, chosenActivity.getName());
   }
 
-  public void addExpertReview(String activityId, String[] options) {
+  public void addPrivateReview(String activityId, String[] options) {
     Boolean idExists = false;
-    Activities chosenActivity = null; 
+    Activities chosenActivity = null;
 
     for (Activities checkActivity : savedActivities) {
-      //checks if input id is exists in system
+      // checks if input id is exists in system
       if (checkActivity.getId().equals(activityId)) {
         chosenActivity = checkActivity;
         if (!idExists) {
           idExists = true;
           break;
         }
-      } 
+      }
     }
 
-    //check if activityId exists before proceeding
+    // check if activityId exists before proceeding
     if (!idExists) {
       MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
       return;
     }
 
-    //Processing options string
-    //check if anon exists
+    // setting rating to int type
+    int rating = 0;
+    switch (options[2]) {
+      case "1":
+        rating = 1;
+        break;
+      case "2":
+        rating = 2;
+        break;
+      case "3":
+        rating = 3;
+        break;
+      case "4":
+        rating = 4;
+        break;
+      case "5":
+        rating = 5;
+        break;
+
+      default:
+        break;
+    }
+
+    // creating review ID
+
+    chosenActivity.incrementCount();
+    int reviewCount = chosenActivity.getCount();
+    String reviewId = String.format("R%d", reviewCount);
+    reviewId = chosenActivity.getId().concat("-").concat(reviewId);
+
+    // PublicR() name, anon, rating, comment
+    Review review = new PrivateR(options[0], options[1], rating, options[3], reviewId);
+    savedReviews.add(review);
+    MessageCli.REVIEW_ADDED.printMessage("Private", reviewId, chosenActivity.getName());
+  }
+
+  public void addExpertReview(String activityId, String[] options) {
+    Boolean idExists = false;
+    Activities chosenActivity = null;
+
+    for (Activities checkActivity : savedActivities) {
+      // checks if input id is exists in system
+      if (checkActivity.getId().equals(activityId)) {
+        chosenActivity = checkActivity;
+        if (!idExists) {
+          idExists = true;
+          break;
+        }
+      }
+    }
+
+    // check if activityId exists before proceeding
+    if (!idExists) {
+      MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
+      return;
+    }
+
+    // Processing options string
+    // check if anon exists
     Boolean recommend;
-    if (options[3].equals("n")){
+    if (options[3].equals("n")) {
       recommend = false;
     } else {
       recommend = true;
     }
 
-    //setting rating to int type
+    // setting rating to int type
     int rating = 0;
     switch (options[2]) {
       case "1":
-      rating = 1;
-      break;
+        rating = 1;
+        break;
       case "2":
-      rating = 2;
-      break;
+        rating = 2;
+        break;
       case "3":
-      rating = 3;
-      break;
+        rating = 3;
+        break;
       case "4":
-      rating = 4;
-      break;
+        rating = 4;
+        break;
       case "5":
-      rating = 5;
-      break;
-            
+        rating = 5;
+        break;
+
       default:
         break;
     }
 
-      //creating review ID
+    // creating review ID
 
     chosenActivity.incrementCount();
     int reviewCount = chosenActivity.getCount();
     String reviewId = String.format("R%d", reviewCount);
     reviewId = chosenActivity.getId().concat("-").concat(reviewId);
 
-    //PublicR() name, anon, rating, comment
+    // PublicR() name, anon, rating, comment
     Review review = new ExpertR(options[0], rating, options[2], recommend, reviewId);
     savedReviews.add(review);
     MessageCli.REVIEW_ADDED.printMessage("Expert", reviewId, chosenActivity.getName());
-
   }
 
   public void displayReviews(String activityId) {
-    //found reviews
+    // found reviews
     ArrayList<Review> foundReviews = new ArrayList<>();
     int count = 0;
     Activities reviewedActivity = null;
     Boolean idExists = false;
 
     for (Activities checkActivities : savedActivities) {
-      //checks if input id is exists in system
+      // checks if input id is exists in system
       if (checkActivities.getId().equals(activityId)) {
         reviewedActivity = checkActivities;
         if (!idExists) {
           idExists = true;
         }
-      } 
+      }
     }
 
     if (!idExists) {
@@ -545,9 +542,9 @@ public class OperatorManagementSystem {
       return;
     }
 
-    //finding all saved reviews at an activity
+    // finding all saved reviews at an activity
     for (Review review : savedReviews) {
-      if (review.getId().contains(activityId)){
+      if (review.getId().contains(activityId)) {
         foundReviews.add(review);
       }
     }
@@ -566,21 +563,30 @@ public class OperatorManagementSystem {
     if (count == 0) {
       MessageCli.REVIEWS_FOUND.printMessage("are", "no", "s", reviewedActivity.getName());
     } else {
-      MessageCli.REVIEWS_FOUND.printMessage(joiningWord, count + "", pluralOperator, reviewedActivity.getName());
+      MessageCli.REVIEWS_FOUND.printMessage(
+          joiningWord, count + "", pluralOperator, reviewedActivity.getName());
       for (Review review : foundReviews) {
-        //Get Review Type
+        // Get Review Type
         String reviewType = "";
+
+        // initalise variables that switch
+        String name = review.getName();
+
         if (review instanceof PublicR) {
           reviewType = "Public";
+          PublicR publicReview = (PublicR) review;
+          if (publicReview.getAnonymous()) {
+            name = "Anonymous";
+          }
         } else if (review instanceof PrivateR) {
           reviewType = "Private";
         } else if (review instanceof ExpertR) {
           reviewType = "Expert";
         }
-        
-        MessageCli.REVIEW_ENTRY_HEADER.printMessage(review.getRating()+"", "5", reviewType, review.getId(), review.getName());
-        MessageCli.REVIEW_ENTRY_REVIEW_TEXT.printMessage(review.getComment());
 
+        MessageCli.REVIEW_ENTRY_HEADER.printMessage(
+            review.getRating() + "", "5", reviewType, review.getId(), name);
+        MessageCli.REVIEW_ENTRY_REVIEW_TEXT.printMessage(review.getComment());
       }
     }
   }

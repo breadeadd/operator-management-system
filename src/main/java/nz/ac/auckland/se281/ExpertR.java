@@ -30,7 +30,7 @@ public class ExpertR extends Review {
       if (returnString.equals("")) {
         returnString = image;
       } else {
-        returnString.concat("," + image);
+        returnString = returnString.concat(String.format(",%s", image));
       }
     }
 

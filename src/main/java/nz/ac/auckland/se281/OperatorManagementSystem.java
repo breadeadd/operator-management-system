@@ -619,8 +619,14 @@ public class OperatorManagementSystem {
         }
 
         if (review instanceof ExpertR) {
+          // printing recommendation
           if (((ExpertR) review).getRecommendation()) {
             MessageCli.REVIEW_ENTRY_RECOMMENDED.printMessage();
+          }
+
+          // printing images
+          if (((ExpertR) review).hasImage()) {
+            MessageCli.REVIEW_ENTRY_IMAGES.printMessage(((ExpertR) review).getImages());
           }
         }
       }
@@ -695,7 +701,7 @@ public class OperatorManagementSystem {
 
         // check if expert review + action
         if (review instanceof ExpertR) {
-          ((ExpertR) review).setImage(imageName);
+          ((ExpertR) review).addImage(imageName);
           MessageCli.REVIEW_IMAGE_ADDED.printMessage(imageName, reviewId);
         } else {
           MessageCli.REVIEW_IMAGE_NOT_ADDED_NOT_EXPERT.printMessage(reviewId);

@@ -386,7 +386,7 @@ public class OperatorManagementSystem {
     reviewId = chosenActivity.getId().concat("-").concat(reviewId);
 
     // PublicR() name, anon, rating, comment
-    Review review = new PublicR(options[0], anon, rating, options[3], reviewId);
+    PublicR review = new PublicR(options[0], anon, rating, options[3], reviewId);
     savedReviews.add(review);
     MessageCli.REVIEW_ADDED.printMessage("Public", reviewId, chosenActivity.getName());
   }
@@ -442,9 +442,18 @@ public class OperatorManagementSystem {
     String reviewId = String.format("R%d", reviewCount);
     reviewId = chosenActivity.getId().concat("-").concat(reviewId);
 
-    // PublicR() name, anon, rating, comment
-    Review review = new PrivateR(options[0], options[1], rating, options[3], reviewId);
+    // PrivateR() name, anon, rating, comment
+    PrivateR review = new PrivateR(options[0], options[1], rating, options[3], reviewId);
+
+    // Checking if follow up
+    if (options[4].equals("y")) {
+      review.setFollowUp(true);
+    } else {
+      review.setFollowUp(false);
+    }
+
     savedReviews.add(review);
+
     MessageCli.REVIEW_ADDED.printMessage("Private", reviewId, chosenActivity.getName());
   }
 
@@ -508,8 +517,8 @@ public class OperatorManagementSystem {
     String reviewId = String.format("R%d", reviewCount);
     reviewId = chosenActivity.getId().concat("-").concat(reviewId);
 
-    // PublicR() name, anon, rating, comment
-    Review review = new ExpertR(options[0], rating, options[2], recommend, reviewId);
+    // ExpertR() name, anon, rating, comment
+    ExpertR review = new ExpertR(options[0], rating, options[2], recommend, reviewId);
     savedReviews.add(review);
     MessageCli.REVIEW_ADDED.printMessage("Expert", reviewId, chosenActivity.getName());
   }
@@ -587,6 +596,16 @@ public class OperatorManagementSystem {
         MessageCli.REVIEW_ENTRY_HEADER.printMessage(
             review.getRating() + "", "5", reviewType, review.getId(), name);
         MessageCli.REVIEW_ENTRY_REVIEW_TEXT.printMessage(review.getComment());
+
+        // message details for private review
+        if (review instanceof PrivateR) {
+          PrivateR privateReview = (PrivateR) review;
+          if (privateReview.getFollowUp()) {
+            MessageCli.REVIEW_ENTRY_FOLLOW_UP.printMessage(privateReview.getEmail());
+          } else {
+            MessageCli.REVIEW_ENTRY_RESOLVED.printMessage("-");
+          }
+        }
       }
     }
   }

@@ -2,7 +2,7 @@ package nz.ac.auckland.se281;
 
 public class PrivateR extends Review {
   private String email;
-  private Boolean followUp;
+  private Boolean followUp; // if follow up true = needs to be emailed
 
   public PrivateR(String name, String email, int rating, String comment, String reviewId) {
     super(name, rating, comment, reviewId);
@@ -15,5 +15,9 @@ public class PrivateR extends Review {
 
   public Boolean getFollowUp() {
     return followUp;
+  }
+
+  public void setFollowUp(Boolean set) {
+    followUp = set;
   }
 }

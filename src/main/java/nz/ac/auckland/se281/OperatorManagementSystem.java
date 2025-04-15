@@ -613,10 +613,12 @@ public class OperatorManagementSystem {
 
         // message details for private review
         if (review instanceof PrivateR) {
+          // check if follow up is required
           if (((PrivateR) review).getFollowUp()) {
             MessageCli.REVIEW_ENTRY_FOLLOW_UP.printMessage(((PrivateR) review).getEmail());
           } else {
-            MessageCli.REVIEW_ENTRY_RESOLVED.printMessage("-");
+            // display no response or response
+            MessageCli.REVIEW_ENTRY_RESOLVED.printMessage(((PrivateR) review).getResponse());
             return;
           }
         }
@@ -634,19 +636,21 @@ public class OperatorManagementSystem {
     Boolean reviewExists = false;
 
     for (Review review : savedReviews) {
+      // only occurs at the right review
       if (review.getId().equals(reviewId)) {
         // mark that review exists
         if (!reviewExists) {
           reviewExists = true;
         }
 
-        // check if public review
+        // check if public review + action
         if (review instanceof PublicR) {
           MessageCli.REVIEW_ENDORSED.printMessage(reviewId);
           ((PublicR) review).setEndorsed(true);
         } else {
           MessageCli.REVIEW_NOT_ENDORSED.printMessage(reviewId);
         }
+        return;
       }
     }
 
@@ -657,7 +661,29 @@ public class OperatorManagementSystem {
   }
 
   public void resolveReview(String reviewId, String response) {
-    // TODO implement
+    Boolean reviewExists = false;
+
+    for (Review review : savedReviews) {
+      if (review.getId().equals(reviewId)) {
+        // mark that review exists
+        if (!reviewExists) {
+          reviewExists = true;
+        }
+
+        // check if private review + action
+        if (review instanceof PrivateR) {
+          ((PrivateR) review).setResponse(response);
+        } else {
+          MessageCli.REVIEW_NOT_RESOLVED.printMessage(reviewId);
+        }
+        return;
+      }
+    }
+
+    if (!reviewExists) {
+      MessageCli.REVIEW_NOT_FOUND.printMessage(reviewId);
+      return;
+    }
   }
 
   public void uploadReviewImage(String reviewId, String imageName) {

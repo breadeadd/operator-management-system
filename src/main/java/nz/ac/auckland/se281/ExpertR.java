@@ -1,8 +1,10 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
+
 public class ExpertR extends Review {
   private boolean recommendation;
-  private String image = null;
+  private ArrayList<String> images = new ArrayList<>();
 
   public ExpertR(String name, int rating, String comment, String reviewId) {
     super(name, rating, comment, reviewId);
@@ -16,11 +18,27 @@ public class ExpertR extends Review {
     return recommendation;
   }
 
-  public void setImage(String image) {
-    this.image = image;
+  // add image to list
+  public void addImage(String image) {
+    images.add(image);
   }
 
-  public String getImage() {
-    return image;
+  // return image text
+  public String getImages() {
+    String returnString = "";
+    for (String image : images) {
+      returnString.concat(image + ",");
+    }
+
+    return returnString;
+  }
+
+  // determine if review has images
+  public boolean hasImage() {
+    if (images.isEmpty()) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

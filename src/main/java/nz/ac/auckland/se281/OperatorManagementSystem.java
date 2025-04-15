@@ -603,11 +603,18 @@ public class OperatorManagementSystem {
             review.getRating() + "", "5", reviewType, review.getId(), name);
         MessageCli.REVIEW_ENTRY_REVIEW_TEXT.printMessage(review.getComment());
 
+        // message details for public review
+        if (review instanceof PublicR) {
+          if (((PublicR) review).getEndorsed()) {
+            MessageCli.REVIEW_ENTRY_ENDORSED.printMessage();
+          }
+          return;
+        }
+
         // message details for private review
         if (review instanceof PrivateR) {
-          PrivateR privateReview = (PrivateR) review;
-          if (privateReview.getFollowUp()) {
-            MessageCli.REVIEW_ENTRY_FOLLOW_UP.printMessage(privateReview.getEmail());
+          if (((PrivateR) review).getFollowUp()) {
+            MessageCli.REVIEW_ENTRY_FOLLOW_UP.printMessage(((PrivateR) review).getEmail());
           } else {
             MessageCli.REVIEW_ENTRY_RESOLVED.printMessage("-");
             return;
@@ -615,8 +622,7 @@ public class OperatorManagementSystem {
         }
 
         if (review instanceof ExpertR) {
-          ExpertR expertReview = (ExpertR) review;
-          if (expertReview.getRecommendation()) {
+          if (((ExpertR) review).getRecommendation()) {
             MessageCli.REVIEW_ENTRY_RECOMMENDED.printMessage();
           }
         }
@@ -625,7 +631,29 @@ public class OperatorManagementSystem {
   }
 
   public void endorseReview(String reviewId) {
-    // TODO implement
+    Boolean reviewExists = false;
+
+    for (Review review : savedReviews) {
+      if (review.getId().equals(reviewId)) {
+        // mark that review exists
+        if (!reviewExists) {
+          reviewExists = true;
+        }
+
+        // check if public review
+        if (review instanceof PublicR) {
+          MessageCli.REVIEW_ENDORSED.printMessage(reviewId);
+          ((PublicR) review).setEndorsed(true);
+        } else {
+          MessageCli.REVIEW_NOT_ENDORSED.printMessage(reviewId);
+        }
+      }
+    }
+
+    if (!reviewExists) {
+      MessageCli.REVIEW_NOT_FOUND.printMessage(reviewId);
+      return;
+    }
   }
 
   public void resolveReview(String reviewId, String response) {

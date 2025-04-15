@@ -479,17 +479,9 @@ public class OperatorManagementSystem {
     }
 
     // Processing options string
-    // check if anon exists
-    Boolean recommend;
-    if (options[3].equals("n")) {
-      recommend = false;
-    } else {
-      recommend = true;
-    }
-
     // setting rating to int type
     int rating = 0;
-    switch (options[2]) {
+    switch (options[1]) {
       case "1":
         rating = 1;
         break;
@@ -518,7 +510,15 @@ public class OperatorManagementSystem {
     reviewId = chosenActivity.getId().concat("-").concat(reviewId);
 
     // ExpertR() name, anon, rating, comment
-    ExpertR review = new ExpertR(options[0], rating, options[2], recommend, reviewId);
+    ExpertR review = new ExpertR(options[0], rating, options[2], reviewId);
+
+    // setting recommendation
+    if (options[3].equals("n")) {
+      review.setRecommendation(false);
+    } else {
+      review.setRecommendation(true);
+    }
+
     savedReviews.add(review);
     MessageCli.REVIEW_ADDED.printMessage("Expert", reviewId, chosenActivity.getName());
   }
@@ -604,6 +604,14 @@ public class OperatorManagementSystem {
             MessageCli.REVIEW_ENTRY_FOLLOW_UP.printMessage(privateReview.getEmail());
           } else {
             MessageCli.REVIEW_ENTRY_RESOLVED.printMessage("-");
+            return;
+          }
+        }
+
+        if (review instanceof ExpertR) {
+          ExpertR expertReview = (ExpertR) review;
+          if (expertReview.getRecommendation()) {
+            MessageCli.REVIEW_ENTRY_RECOMMENDED.printMessage();
           }
         }
       }

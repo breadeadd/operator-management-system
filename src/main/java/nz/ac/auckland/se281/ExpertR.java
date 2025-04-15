@@ -27,7 +27,11 @@ public class ExpertR extends Review {
   public String getImages() {
     String returnString = "";
     for (String image : images) {
-      returnString.concat(image + ",");
+      if (returnString.equals("")) {
+        returnString = image;
+      } else {
+        returnString.concat("," + image);
+      }
     }
 
     return returnString;

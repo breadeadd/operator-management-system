@@ -545,10 +545,16 @@ public class OperatorManagementSystem {
       return;
     }
 
-    count = savedReviews.size();
-
+    // irrelevant
     if (reviewedActivity == null) {
       return;
+    }
+
+    // counting reviews
+    for (Review review : savedReviews) {
+      if (review.getId().contains(activityId)) {
+        count++;
+      }
     }
 
     // finding all saved reviews at an activity

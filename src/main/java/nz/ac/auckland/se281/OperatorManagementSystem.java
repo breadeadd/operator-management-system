@@ -669,6 +669,7 @@ public class OperatorManagementSystem {
         if (review instanceof PrivateR) {
           ((PrivateR) review).setResponse(response);
           MessageCli.REVIEW_RESOLVED.printMessage(review.getId());
+          ((PrivateR) review).setFollowUp(false); // no longer needs response
         } else {
           MessageCli.REVIEW_NOT_RESOLVED.printMessage(reviewId);
         }

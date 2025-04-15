@@ -526,7 +526,6 @@ public class OperatorManagementSystem {
   public void displayReviews(String activityId) {
     // found reviews
     ArrayList<Review> foundReviews = new ArrayList<>();
-    int count = 0;
     Activities reviewedActivity = null;
     Boolean idExists = false;
 
@@ -550,19 +549,14 @@ public class OperatorManagementSystem {
       return;
     }
 
-    // counting reviews
-    for (Review review : savedReviews) {
-      if (review.getId().contains(activityId)) {
-        count++;
-      }
-    }
-
-    // finding all saved reviews at an activity
+    // finding all saved reviews at an activity + counting
     for (Review review : savedReviews) {
       if (review.getId().contains(activityId)) {
         foundReviews.add(review);
       }
     }
+
+    int count = foundReviews.size();
 
     // checking plural
     String pluralOperator;
@@ -577,9 +571,12 @@ public class OperatorManagementSystem {
 
     if (count == 0) {
       MessageCli.REVIEWS_FOUND.printMessage("are", "no", "s", reviewedActivity.getName());
+      return;
     } else {
       MessageCli.REVIEWS_FOUND.printMessage(
           joiningWord, count + "", pluralOperator, reviewedActivity.getName());
+
+      // for each found review
       for (Review review : foundReviews) {
         // Get Review Type
         String reviewType = "";
@@ -608,7 +605,6 @@ public class OperatorManagementSystem {
           if (((PublicR) review).getEndorsed()) {
             MessageCli.REVIEW_ENTRY_ENDORSED.printMessage();
           }
-          return;
         }
 
         // message details for private review
@@ -619,7 +615,6 @@ public class OperatorManagementSystem {
           } else {
             // display no response or response
             MessageCli.REVIEW_ENTRY_RESOLVED.printMessage(((PrivateR) review).getResponse());
-            return;
           }
         }
 
@@ -673,6 +668,7 @@ public class OperatorManagementSystem {
         // check if private review + action
         if (review instanceof PrivateR) {
           ((PrivateR) review).setResponse(response);
+          MessageCli.REVIEW_RESOLVED.printMessage(review.getId());
         } else {
           MessageCli.REVIEW_NOT_RESOLVED.printMessage(reviewId);
         }

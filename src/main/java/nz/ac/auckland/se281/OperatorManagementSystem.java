@@ -132,7 +132,7 @@ public class OperatorManagementSystem {
       operatorInitals = operatorInitals + word.charAt(0);
     }
 
-    // setting three digit number
+    // setting three digit number - hashmap
     if (counts.containsKey(locationInitials)) {
       counts.put(locationInitials, counts.get(locationInitials) + 1);
     }
@@ -717,6 +717,30 @@ public class OperatorManagementSystem {
   }
 
   public void displayTopActivities() {
-    // TODO implement
+    Location location[] = Location.values();
+    // could access hashmap to det if location has assets
+    // for (int i = 0; i < 8; i++) {
+    //   // assign location counter and variable name
+    //   String reviewLocation = location[i] + "";
+    //   for (Activities activity : savedActivities) {
+    //     if (activity.getActivityLocation().contains(reviewLocation)) {}
+    //   }
+    // }
+
+    int count = 0;
+
+    for (Location loco : Location.values()) {
+      for (Review review : savedReviews) {
+        for (Activities activity : savedActivities) {
+          if (review.getId().contains(activity.getId())
+              && activity.getActivityLocation().contains(loco.getLocationAbbreviation())) {}
+        }
+      }
+
+      // if count = 0
+      if (count == 0) {
+        MessageCli.NO_REVIEWED_ACTIVITIES.printMessage(loco.getFullName());
+      }
+    }
   }
 }

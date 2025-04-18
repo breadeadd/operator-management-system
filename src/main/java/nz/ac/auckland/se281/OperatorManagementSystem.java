@@ -24,6 +24,7 @@ public class OperatorManagementSystem {
       public void initializeCounts() {
         // Assigning keys and values
         if (!isInitialized) {
+          // initalise counts
           counts.put("AKL", 0);
           counts.put("HLZ", 0);
           counts.put("TRG", 0);
@@ -32,6 +33,7 @@ public class OperatorManagementSystem {
           counts.put("NSN", 0);
           counts.put("CHC", 0);
           counts.put("DUD", 0);
+
           isInitialized = true;
         }
       }
@@ -717,29 +719,45 @@ public class OperatorManagementSystem {
   }
 
   public void displayTopActivities() {
-    Location location[] = Location.values();
-    // could access hashmap to det if location has assets
-    // for (int i = 0; i < 8; i++) {
-    //   // assign location counter and variable name
-    //   String reviewLocation = location[i] + "";
-    //   for (Activities activity : savedActivities) {
-    //     if (activity.getActivityLocation().contains(reviewLocation)) {}
-    //   }
-    // }
+    for (Location loco : Location.values()) { // for each location
+      double topAverage = 0;
+      String topActivity = "";
+      Boolean hasReviews = false;
 
-    int count = 0;
+      for (Activities activity : savedActivities) {
+        if (!activity.getId().contains(loco.getLocationAbbreviation())) continue;
 
-    for (Location loco : Location.values()) {
-      for (Review review : savedReviews) {
-        for (Activities activity : savedActivities) {
-          if (review.getId().contains(activity.getId())
-              && activity.getActivityLocation().contains(loco.getLocationAbbreviation())) {}
+        int count = 0;
+        double total = 0;
+        for (Review review : savedReviews) {
+          // checks if review is from the same activity in the right location
+          if (review.getId().contains(activity.getId())) {
+
+            // gather activity avg - top avg
+            total += review.getRating();
+            count++;
+          }
+        }
+
+        if (count > 0) {
+          hasReviews = true;
+          double average = total / count;
+
+          // after checking all reviews compare averages and replace
+          if (average > topAverage) {
+            // averages.put(locoCode, average);
+            topAverage = average;
+            topActivity = activity.getName();
+          }
         }
       }
 
       // if count = 0
-      if (count == 0) {
+      if (!hasReviews) {
         MessageCli.NO_REVIEWED_ACTIVITIES.printMessage(loco.getFullName());
+      } else {
+        // display top activity
+        MessageCli.TOP_ACTIVITY.printMessage(loco.getNameEnglish(), topActivity, topAverage + "");
       }
     }
   }

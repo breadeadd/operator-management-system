@@ -26,10 +26,13 @@ public class ExpertR extends Review {
   // return image text
   public String getImages() {
     String returnString = "";
+
     for (String image : images) {
       if (returnString.equals("")) {
+        // starting images
         returnString = image;
       } else {
+        // additional images
         returnString = returnString.concat(String.format(",%s", image));
       }
     }

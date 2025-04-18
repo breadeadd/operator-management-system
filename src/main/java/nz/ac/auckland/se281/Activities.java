@@ -1,13 +1,13 @@
 package nz.ac.auckland.se281;
 
 public class Activities {
-  String name;
-  String type;
-  String activityId;
-  String location;
-  Operator operator;
-  String operatorLocation;
-  int reviewCount;
+  private String name;
+  private String type;
+  private String activityId;
+  private String location;
+  private Operator operator;
+  private String operatorLocation;
+  private int reviewCount;
 
   public Activities(String name, String type, String activityId, Operator operator) {
     this.name = name;
@@ -42,7 +42,7 @@ public class Activities {
     return operatorLocation;
   }
 
-  public int incrementCount(){
+  public int incrementCount() {
     reviewCount++;
     return reviewCount;
   }

@@ -60,7 +60,8 @@ public class OperatorManagementSystem {
     }
 
     for (Operator savedOperator : savedOperators) {
-      if (savedOperator.name.equals(keyword) || savedOperator.location.contains(keyword)) {
+      if (savedOperator.getName().equals(keyword)
+          || savedOperator.getLocation().contains(keyword)) {
         operatorCount++;
         foundOperators.add(savedOperator);
       }
@@ -172,7 +173,7 @@ public class OperatorManagementSystem {
   //////////////////////////////////////////////////
   public void viewActivities(String operatorId) {
     // initalise count
-    boolean IDExists = false;
+    boolean IdExists = false;
     Operator chosenOperator = null;
     int activityCount = 0;
 
@@ -186,13 +187,13 @@ public class OperatorManagementSystem {
     for (Operator identity : savedOperators) {
       if (identity.getOperatorId().equals(operatorId)) {
         chosenOperator = identity;
-        IDExists = true;
+        IdExists = true;
         break;
       }
     }
 
     // if operatorId doesn't exist
-    if (!IDExists) {
+    if (!IdExists) {
       MessageCli.OPERATOR_NOT_FOUND.printMessage(operatorId);
       return;
     }
@@ -234,7 +235,7 @@ public class OperatorManagementSystem {
   ///////
   public void createActivity(String activityName, String activityType, String operatorId) {
     // intialise conditions
-    boolean IdExists = false;
+    boolean idExists = false;
     Operator chosenOperator = null;
 
     // checking if activityName is valid
@@ -246,14 +247,14 @@ public class OperatorManagementSystem {
     // check if operatorId exists
     for (Operator operator : savedOperators) {
       if (operator.getOperatorId().equals(operatorId)) {
-        IdExists = true;
+        idExists = true;
         chosenOperator = operator;
         break;
       }
     }
 
     // if operatorId doesn't exist
-    if (!IdExists) {
+    if (!idExists) {
       MessageCli.ACTIVITY_NOT_CREATED_INVALID_OPERATOR_ID.printMessage(operatorId);
       return;
     }
@@ -725,7 +726,9 @@ public class OperatorManagementSystem {
       Boolean hasReviews = false;
 
       for (Activities activity : savedActivities) {
-        if (!activity.getId().contains(loco.getLocationAbbreviation())) continue;
+        if (!activity.getId().contains(loco.getLocationAbbreviation())) {
+          continue;
+        }
 
         int count = 0;
         double total = 0;

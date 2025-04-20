@@ -239,7 +239,7 @@ public class OperatorManagementSystem {
     Operator chosenOperator = null;
 
     // checking if activityName is valid
-    if (activityName.length() < 3) {
+    if (activityName.trim().length() < 3) {
       MessageCli.ACTIVITY_NOT_CREATED_INVALID_ACTIVITY_NAME.printMessage(activityName);
       return;
     }

@@ -701,7 +701,8 @@ public class OperatorManagementSystem {
         double total = 0;
         for (Review review : savedReviews) {
           // checks if review is from the same activity in the right location
-          if (review.getId().contains(activity.getId())) {
+          // not including private
+          if (review.getId().contains(activity.getId()) && !(review instanceof PrivateR)) {
 
             // gather activity avg - top avg
             total += review.getRating();

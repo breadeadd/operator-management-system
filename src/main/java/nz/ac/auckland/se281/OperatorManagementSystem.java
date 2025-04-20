@@ -305,7 +305,8 @@ public class OperatorManagementSystem {
       for (Activities activity : savedActivities) {
         if (activity.getName().toLowerCase().contains(keyword)
             || activity.getType().toLowerCase().contains(keyword)
-            || activity.getOperatorLocation().toLowerCase().contains(keyword)) {
+            || activity.getOperatorLocation().toLowerCase().contains(keyword)
+            || activity.getId().contains(keyword.toUpperCase())) {
           foundActivities.add(activity);
           activityCount++;
         }

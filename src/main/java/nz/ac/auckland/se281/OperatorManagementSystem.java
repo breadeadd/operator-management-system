@@ -371,26 +371,11 @@ public class OperatorManagementSystem {
     }
 
     // setting rating to int type
-    int rating = 0;
-    switch (options[2]) {
-      case "1":
-        rating = 1;
-        break;
-      case "2":
-        rating = 2;
-        break;
-      case "3":
-        rating = 3;
-        break;
-      case "4":
-        rating = 4;
-        break;
-      case "5":
-        rating = 5;
-        break;
-
-      default:
-        break;
+    int rating = Integer.parseInt(options[2]);
+    if (rating > 5) {
+      rating = 5;
+    } else if (rating < 1) {
+      rating = 1;
     }
 
     // creating review ID
@@ -428,26 +413,11 @@ public class OperatorManagementSystem {
     }
 
     // setting rating to int type
-    int rating = 0;
-    switch (options[2]) {
-      case "1":
-        rating = 1;
-        break;
-      case "2":
-        rating = 2;
-        break;
-      case "3":
-        rating = 3;
-        break;
-      case "4":
-        rating = 4;
-        break;
-      case "5":
-        rating = 5;
-        break;
-
-      default:
-        break;
+    int rating = Integer.parseInt(options[2]);
+    if (rating > 5) {
+      rating = 5;
+    } else if (rating < 1) {
+      rating = 1;
     }
 
     // creating review ID
@@ -495,26 +465,11 @@ public class OperatorManagementSystem {
 
     // Processing options string
     // setting rating to int type
-    int rating = 0;
-    switch (options[1]) {
-      case "1":
-        rating = 1;
-        break;
-      case "2":
-        rating = 2;
-        break;
-      case "3":
-        rating = 3;
-        break;
-      case "4":
-        rating = 4;
-        break;
-      case "5":
-        rating = 5;
-        break;
-
-      default:
-        break;
+    int rating = Integer.parseInt(options[1]);
+    if (rating > 5) {
+      rating = 5;
+    } else if (rating < 1) {
+      rating = 1;
     }
 
     // creating review ID

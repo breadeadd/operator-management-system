@@ -510,7 +510,7 @@ public class OperatorManagementSystem {
     }
 
     if (!idExists) {
-      MessageCli.REVIEW_NOT_FOUND.printMessage(activityId);
+      MessageCli.ACTIVITY_NOT_FOUND.printMessage(activityId);
       return;
     }
 

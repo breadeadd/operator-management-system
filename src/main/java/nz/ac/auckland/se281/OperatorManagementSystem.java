@@ -2,6 +2,7 @@ package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import nz.ac.auckland.se281.Types.ActivityType;
 import nz.ac.auckland.se281.Types.Location;
 
 public class OperatorManagementSystem {
@@ -244,6 +245,16 @@ public class OperatorManagementSystem {
       return;
     }
 
+    activityName = activityName.trim();
+
+    // check activity type
+    // make activity type format correct
+    activityType = activityType.trim().toLowerCase();
+    activityType = activityType.substring(0, 1).toUpperCase() + activityType.substring(1);
+
+    // check with existing options
+    ActivityType typeFound = ActivityType.fromString(activityType);
+
     // check if operatorId exists
     for (Operator operator : savedOperators) {
       if (operator.getOperatorId().equals(operatorId)) {
@@ -266,12 +277,12 @@ public class OperatorManagementSystem {
     activityId = chosenOperator.getOperatorId().concat("-").concat(activityId);
 
     // adding new activity to list
-    Activities newActivity = new Activities(activityName, activityType, activityId, chosenOperator);
+    Activities newActivity = new Activities(activityName, typeFound, activityId, chosenOperator);
     savedActivities.add(newActivity);
 
     // Messages
     MessageCli.ACTIVITY_CREATED.printMessage(
-        activityName, activityId, activityType, chosenOperator.getName());
+        activityName, activityId, typeFound + "", chosenOperator.getName());
   }
 
   public void searchActivities(String keyword) {

@@ -1,15 +1,17 @@
 package nz.ac.auckland.se281;
 
+import nz.ac.auckland.se281.Types.ActivityType;
+
 public class Activities {
   private String name;
-  private String type;
+  private ActivityType type;
   private String activityId;
   private String location;
   private Operator operator;
   private String operatorLocation;
   private int reviewCount;
 
-  public Activities(String name, String type, String activityId, Operator operator) {
+  public Activities(String name, ActivityType type, String activityId, Operator operator) {
     this.name = name;
     this.type = type;
     this.activityId = activityId;
@@ -23,7 +25,7 @@ public class Activities {
   }
 
   public String getType() {
-    return type;
+    return type + "";
   }
 
   public String getId() {

@@ -29,7 +29,7 @@ public class ExpertR extends Review {
 
     for (String image : images) {
       if (returnString.equals("")) {
-        // starting images
+        // if only one image/ first image without comma
         returnString = image;
       } else {
         // additional images

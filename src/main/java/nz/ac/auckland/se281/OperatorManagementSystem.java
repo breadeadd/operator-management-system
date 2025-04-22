@@ -174,7 +174,7 @@ public class OperatorManagementSystem {
   //////////////////////////////////////////////////
   public void viewActivities(String operatorId) {
     // initalise count
-    boolean IdExists = false;
+    boolean idExists = false;
     Operator chosenOperator = null;
     int activityCount = 0;
 
@@ -188,13 +188,13 @@ public class OperatorManagementSystem {
     for (Operator identity : savedOperators) {
       if (identity.getOperatorId().equals(operatorId)) {
         chosenOperator = identity;
-        IdExists = true;
+        idExists = true;
         break;
       }
     }
 
     // if operatorId doesn't exist
-    if (!IdExists) {
+    if (!idExists) {
       MessageCli.OPERATOR_NOT_FOUND.printMessage(operatorId);
       return;
     }
